@@ -19,7 +19,6 @@ public class ClickHandler extends MouseAdapter {
         canvas = pc;
     }
 
-
     @Override
     public void mousePressed(MouseEvent e){
         start.x = e.getX();
@@ -40,7 +39,6 @@ public class ClickHandler extends MouseAdapter {
 
         int xCoord = Math.min(start.x, end.x);
         int yCoord = Math.min(start.y, end.y);
-
 
         canvas.getGraphics().fillRect(xCoord, yCoord, width, height);
     }
