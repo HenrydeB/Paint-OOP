@@ -34,13 +34,11 @@ public class ClickHandler extends MouseAdapter {
         System.out.println("end x = " + end.x);
         System.out.println("end y = " + end.y);
 
-        width = calcSide(start.x, end.x);
-        height = calcSide(start.y, end.y);
+        //Execute the command here to create our shape.
+        //for now it will have to be statically a rectangle, but we can later apply the
+        //logic to grab the app state shape
+        //canvas.getGraphics().fillRect(xCoord, yCoord, width, height);
 
-        int xCoord = Math.min(start.x, end.x);
-        int yCoord = Math.min(start.y, end.y);
-
-        canvas.getGraphics().fillRect(xCoord, yCoord, width, height);
     }
 
     //Might want to change where this is for the sake of proper OOP, but this is an effect that happens
