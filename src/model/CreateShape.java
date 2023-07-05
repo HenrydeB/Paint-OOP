@@ -4,15 +4,11 @@ import model.interfaces.IShape;
 
 public class CreateShape {
 
-    static Point start;
-    static Point end;
 
-    public CreateShape (Point s, Point e){
-        start = s;
-        end = e;
+    public CreateShape (){
     }
-    public static IShape run(String type){
-                return new Shape(start, end, type);
+    public static IShape run(String type, Point start){
+                return new Shape(type, start);
         }
 }
 

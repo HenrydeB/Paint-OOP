@@ -3,17 +3,18 @@ package model;
 import model.interfaces.IShape;
 
 public class Shape implements IShape{
-    Point onClick;
-    Point offClick;
+
     String type;
     int width;
     int height;
 
-    public Shape(Point first, Point end, String reqType){
-        onClick = first;
-        offClick = end;
-        type = reqType; //this may later come from the ApplicationState
+    Point start;
+    Point end;
 
+    public Shape(String reqType, Point initial){
+
+        type = reqType; //this may later come from the ApplicationState
+        start = initial;
         switch(type.toLowerCase()){
             case "rectangle":
                 createRectangle();
@@ -33,15 +34,29 @@ public class Shape implements IShape{
 
     @Override
     public void createRectangle() {
-        width = calcSide(this.onClick.x, this.offClick.x);
-        height = calcSide(this.onClick.y, this.offClick.y);
 
-        //Might not need these lines anymore?
-        int xCoord = Math.min(this.onClick.x, this.offClick.x);
-        int yCoord = Math.min(this.onClick.y, this.offClick.y);
 
         //We need to create the list and add our shape to the list maybe here?
         //maybe we can add it right after we call the function
 
+        GlobalShapeList shapeList = GlobalShapeList.getInstance();
+        shapeList.Add(this);
+
+    }
+
+    public void setWidth(int width){
+        this.width = width;
+    }
+
+    public void setHeight(int height){
+        this.height = height;
+    }
+
+    public void setEnd (Point end){
+        this.end = end;
+    }
+
+    public void setStart(Point start){
+        this.start = start;
     }
 }

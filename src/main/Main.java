@@ -1,6 +1,7 @@
 package main;
 
 import controller.JPaintController;
+import model.GlobalShapeList;
 import model.persistence.ApplicationState;
 import view.ClickHandler;
 import view.gui.Gui;
@@ -17,6 +18,8 @@ public class Main {
         IUiModule uiModule = new Gui(guiWindow);
 
         ApplicationState appState = new ApplicationState(uiModule);
+
+        GlobalShapeList shapeList = GlobalShapeList.getInstance();
 
         paintCanvas.addMouseListener(new ClickHandler(paintCanvas));
 

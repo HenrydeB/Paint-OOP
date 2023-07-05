@@ -1,5 +1,8 @@
 package view;
 
+import model.CreateShape;
+import model.GlobalShapeList;
+import model.Shape;
 import model.Point;
 import view.gui.PaintCanvas;
 
@@ -13,7 +16,7 @@ public class ClickHandler extends MouseAdapter {
     public Point end = new Point();
     int width;
     int height;
-    PaintCanvas canvas = new PaintCanvas();
+    PaintCanvas canvas;
 
     public ClickHandler(PaintCanvas pc){
         canvas = pc;
@@ -23,21 +26,28 @@ public class ClickHandler extends MouseAdapter {
     public void mousePressed(MouseEvent e){
         start.x = e.getX();
         start.y = e.getY();
-        System.out.println("start x = " + start.x);
-        System.out.println("start y = " + start.y);
+
+        //CreateShape cmd = (CreateShape)CreateShape.run("rectangle", start);
+        CreateShape cs = new CreateShape();
+        cs.run("rectangle", start);
+        canvas.repaint();
+        System.out.println("canvas repainted");
     }
 
     @Override
     public void mouseReleased(MouseEvent e){
         end.x = e.getX();
         end.y = e.getY();
-        System.out.println("end x = " + end.x);
-        System.out.println("end y = " + end.y);
 
-        //Execute the command here to create our shape.
-        //for now it will have to be statically a rectangle, but we can later apply the
-        //logic to grab the app state shape
-        //canvas.getGraphics().fillRect(xCoord, yCoord, width, height);
+        int xCoord = Math.min(this.start.x, this.end.x);
+        int yCoord = Math.min(this.start.y, this.end.y);
+
+        width = calcSide(this.start.x, this.end.x);
+        height = calcSide(this.start.y, this.end.y);
+
+        finishRecentShape();
+
+        canvas.getGraphics().fillRect(xCoord, yCoord, width, height);
 
     }
 
@@ -46,6 +56,13 @@ public class ClickHandler extends MouseAdapter {
     private int calcSide(int cor1, int cor2){
         //regardless of where the first click is, I imagine this will work
         return Math.max(cor1, cor2) - Math.min(cor1, cor2);
+    }
+
+    private void finishRecentShape(){
+        Shape recent = GlobalShapeList.getInstance().Recent();
+        recent.setEnd(end);
+        recent.setWidth(width);
+        recent.setHeight(height);
     }
 
 }
