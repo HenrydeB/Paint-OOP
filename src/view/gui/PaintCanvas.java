@@ -1,35 +1,41 @@
 package view.gui;
 
+import model.Shape;
+import model.GlobalShapeList;
+import java.util.*;
 import model.Point;
 import view.ClickHandler;
 
 import javax.swing.JComponent;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class PaintCanvas extends JComponent {
-
-
+    List<Shape> shapes;
+    GlobalShapeList globalShapeList;
+public PaintCanvas(List<Shape> shapeList) {
+    shapes = shapeList;
+    globalShapeList = GlobalShapeList.getInstance();
+}
     @Override
     public void paint(Graphics g) {
 
         Graphics2D graphics2d = (Graphics2D)g;
+        GlobalShapeList instance = GlobalShapeList.getInstance();
+        List<Shape> shapeList = instance.getList();
+        if (shapeList != null) {
+           // System.out.println(shapeList.size());
+            for(Shape shape : shapeList) {
 
-        // Draw all shapes here
+                graphics2d.setColor(Color.GREEN);
+                switch (shape.type.toLowerCase()) {
+                    case "rectangle":
+                        graphics2d.fillRect(shape.minX, shape.minY, shape.width, shape.height);
 
-        // For example purposes only; remove all lines below from your final project.
-        graphics2d.setColor(Color.GREEN);
-        //graphics2d.fillRect(start.x, start.y, width, height);
-
-/*        // Outlined rectangle
-        graphics2d.setStroke(new BasicStroke(5));
-        graphics2d.setColor(Color.BLUE);
-        graphics2d.drawRect(12, 13, 200, 400);
-
-        // Selected Shape
-        Stroke stroke = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 1, new float[]{9}, 0);
-        graphics2d.setStroke(stroke);
-        graphics2d.setColor(Color.BLACK);
-        graphics2d.drawRect(7, 8, 210, 410);*/
+                }
+            }
+        }
     }
 }
+

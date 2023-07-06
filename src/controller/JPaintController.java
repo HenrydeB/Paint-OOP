@@ -1,17 +1,22 @@
 package controller;
 
+import model.CreateShape;
 import model.interfaces.IApplicationState;
 import view.EventName;
+import view.gui.PaintCanvas;
 import view.interfaces.IUiModule;
 
 public class JPaintController implements IJPaintController {
     private final IUiModule uiModule;
     private final IApplicationState applicationState;
 
-    public JPaintController(IUiModule uiModule, IApplicationState applicationState) {
+    private PaintCanvas canvas;
+
+    public JPaintController(IUiModule uiModule, IApplicationState applicationState, PaintCanvas cnv) {
         this.uiModule = uiModule;
         this.applicationState = applicationState;
         setupEvents();
+        canvas = cnv;
     }
 
     private void setupEvents() {
@@ -30,9 +35,13 @@ public class JPaintController implements IJPaintController {
     }
 
     private void undo() {
+        System.out.println("undo cmd");
+        CreateShape action = new CreateShape();
+        action.run( "",null,null,canvas,"undo");
     }
 
     private void redo() {
+        System.out.println("redo cmd");
     }
 
     private void copy() {
