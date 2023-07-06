@@ -14,7 +14,6 @@ class CommandHistory implements IUndoable{
 	}
 
 	public static boolean undo() {
-		System.out.println("in Command History");
 		boolean result = !undoStack.empty();
 		if (result) {
 			IUndoable c = undoStack.pop();
@@ -25,7 +24,6 @@ class CommandHistory implements IUndoable{
 	}
 
 	public static boolean redo() {
-		System.out.println("In Command History");
 		boolean result = !redoStack.empty();
 		if (result) {
 			IUndoable c = redoStack.pop();

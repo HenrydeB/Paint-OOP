@@ -4,7 +4,7 @@ import model.interfaces.IShape;
 import model.interfaces.IUndoable;
 import view.gui.PaintCanvas;
 
-public class Shape implements IShape, IUndoable {
+public class Shape implements IShape {
 
    public String type;
    public int width;

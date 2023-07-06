@@ -25,9 +25,7 @@ public PaintCanvas(List<Shape> shapeList) {
         GlobalShapeList instance = GlobalShapeList.getInstance();
         List<Shape> shapeList = instance.getList();
         if (shapeList != null) {
-           // System.out.println(shapeList.size());
             for(Shape shape : shapeList) {
-
                 graphics2d.setColor(Color.GREEN);
                 switch (shape.type.toLowerCase()) {
                     case "rectangle":

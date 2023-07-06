@@ -35,13 +35,13 @@ public class JPaintController implements IJPaintController {
     }
 
     private void undo() {
-        System.out.println("undo cmd");
         CreateShape action = new CreateShape();
         action.run( "",null,null,canvas,"undo");
     }
 
     private void redo() {
-        System.out.println("redo cmd");
+        CreateShape action = new CreateShape();
+        action.run("", null, null, canvas,"redo");
     }
 
     private void copy() {
