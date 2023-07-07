@@ -31,10 +31,15 @@ public class GlobalShapeList {
 
 
     public Shape Remove(){
-        Shape recent = shapeList.get(shapeList.size() - 1);
-        shapeList.remove(shapeList.size() - 1);
-        removedShapes.add(recent);
-        return recent;
+        int index = shapeList.size() - 1;
+
+        if((index >= 0)) {
+            Shape recent = shapeList.get(index);
+            shapeList.remove(index);
+            removedShapes.add(recent);
+            return recent;
+        }
+        return null;
     }
 
     public void Clear(){

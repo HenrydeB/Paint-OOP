@@ -54,11 +54,12 @@ public class CreateShape implements IUndoable {
         List<Shape> removed = instance.getRemovedShapes();
 
         int removedIndex = removed.size() - 1;
-
-        Shape recent = removed.get(removedIndex);
-        removed.remove(removedIndex);
-        shapes.add(recent);
-        canvas.repaint();
+        if(removedIndex >= 0 ) {
+            Shape recent = removed.get(removedIndex);
+            removed.remove(removedIndex);
+            shapes.add(recent);
+            canvas.repaint();
+        }
     }
 }
 
