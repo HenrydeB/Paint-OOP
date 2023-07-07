@@ -42,7 +42,6 @@ public class CreateShape implements IUndoable {
     }
 
     private void removeShape(PaintCanvas canvas){
-        //removedShape = globalList.Remove();
         removedShape = globalList.Remove();
         CommandHistory.undo();
         canvas.repaint();
@@ -52,8 +51,13 @@ public class CreateShape implements IUndoable {
         CommandHistory.redo();
         GlobalShapeList instance = GlobalShapeList.getInstance();
         List<Shape> shapes = instance.getList();
-        //Shape recentlyRemoved = removedShapes.get(shapes.size() - 1);
-        shapes.add(removedShape);
+        List<Shape> removed = instance.getRemovedShapes();
+
+        int removedIndex = removed.size() - 1;
+
+        Shape recent = removed.get(removedIndex);
+        removed.remove(removedIndex);
+        shapes.add(recent);
         canvas.repaint();
     }
 }
