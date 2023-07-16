@@ -31,6 +31,6 @@ public class ClickHandler extends MouseAdapter {
         end.x = e.getX();
         end.y = e.getY();
         CreateShape cs = new CreateShape();
-        cs.addShape(appState, start, end, canvas);
+        cs.addShape(appState, start, end);
     }
 }
