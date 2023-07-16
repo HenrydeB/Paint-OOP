@@ -1,4 +1,4 @@
-package model;
+package model.Shapes;
 
 public enum ShapeShadingType {
     FILLED_IN,

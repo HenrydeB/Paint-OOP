@@ -1,8 +1,8 @@
 package model.interfaces;
 
-import model.ShapeColor;
-import model.ShapeShadingType;
-import model.ShapeType;
+import model.Shapes.ShapeColor;
+import model.Shapes.ShapeShadingType;
+import model.Shapes.ShapeType;
 import model.MouseMode;
 import view.interfaces.IDialogChoice;
 

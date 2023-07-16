@@ -1,9 +1,9 @@
 package model.interfaces;
 
-import model.Point;
-import model.ShapeType;
-
 public interface IShape{
-    void createRectangle();
-
+    //void createRectangle();
+    void draw();
+    void move();
+    void paste();
+    void delete();
 }

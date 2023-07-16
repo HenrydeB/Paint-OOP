@@ -1,64 +1,46 @@
 package model;
 
-import model.interfaces.IShape;
+import model.Lists.GlobalShapeLists;
+import model.Shapes.Shape;
+import model.Shapes.ShapeFactory;
 import model.interfaces.IUndoable;
+import model.persistence.ApplicationState;
 import view.gui.PaintCanvas;
 
 import java.util.*;
 
 public class CreateShape implements IUndoable {
 
-    static String command;
     static Shape removedShape;
     static Shape createdShape;
-   private static GlobalShapeList globalList;
+   private static GlobalShapeLists globalList;
+   //ApplicationState appState
 
     public CreateShape () {
-       globalList = GlobalShapeList.getInstance();
+       globalList = GlobalShapeLists.getInstance();
     }
-    public IShape run(String type, Point start, Point end, PaintCanvas canvas, String action){
-            command = action;
-            switch(command){
-                case "add":
-                    addShape(type, start, end, canvas);
-                    break;
-                case "undo":
-                    removeShape(canvas);
-
-                    break;
-                case "redo":
-                    redoShape(canvas);
-            }
-            canvas.repaint();
-            return createdShape;
-        }
-    private void addShape(String type, Point start, Point end, PaintCanvas canvas){
-        createdShape = new Shape(type, start, end);
-        GlobalShapeList instance = GlobalShapeList.getInstance();
-        List<Shape> shapes = instance.getList();
-        shapes.add(createdShape);
+    public void addShape(ApplicationState appState, Point start, Point end){
+        ShapeFactory factory = new ShapeFactory();
+        createdShape = factory.createShape(appState, start, end);
+        GlobalShapeLists instance = GlobalShapeLists.getInstance();
+        instance.AddToList(createdShape);
         CommandHistory.add(this);
-        canvas.repaint();
     }
 
-    private void removeShape(PaintCanvas canvas){
+    public void removeShape(PaintCanvas canvas){
         removedShape = globalList.Remove();
         CommandHistory.undo();
-        canvas.repaint();
     }
 
-    private static void redoShape(PaintCanvas canvas){
+    public void redoShape(PaintCanvas canvas){
         CommandHistory.redo();
-        GlobalShapeList instance = GlobalShapeList.getInstance();
-        List<Shape> shapes = instance.getList();
+        GlobalShapeLists instance = GlobalShapeLists.getInstance();
         List<Shape> removed = instance.getRemovedShapes();
-
         int removedIndex = removed.size() - 1;
         if(removedIndex >= 0 ) {
             Shape recent = removed.get(removedIndex);
             removed.remove(removedIndex);
-            shapes.add(recent);
-            canvas.repaint();
+            instance.AddToList(recent);
         }
     }
 }

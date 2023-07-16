@@ -1,39 +1,37 @@
 package view.gui;
 
-import model.Shape;
-import model.GlobalShapeList;
-import java.util.*;
-import model.Point;
-import view.ClickHandler;
+import model.Lists.GlobalShapeLists;
+import model.Shapes.Shape;
+import view.Strategy.StrategyFactory;
+import view.interfaces.IShapeObserver;
 
 import javax.swing.JComponent;
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class PaintCanvas extends JComponent {
-    List<Shape> shapes;
-    GlobalShapeList globalShapeList;
-public PaintCanvas(List<Shape> shapeList) {
-    shapes = shapeList;
-    globalShapeList = GlobalShapeList.getInstance();
+public class PaintCanvas extends JComponent implements IShapeObserver {
+    GlobalShapeLists globalShapeList;
+public PaintCanvas() {
+    globalShapeList = GlobalShapeLists.getInstance();
 }
     @Override
     public void paint(Graphics g) {
-
         Graphics2D graphics2d = (Graphics2D)g;
-        GlobalShapeList instance = GlobalShapeList.getInstance();
-        List<Shape> shapeList = instance.getList();
-        if (shapeList != null) {
-            for(Shape shape : shapeList) {
-                graphics2d.setColor(Color.GREEN);
-                switch (shape.type.toLowerCase()) {
-                    case "rectangle":
-                        graphics2d.fillRect(shape.minX, shape.minY, shape.width, shape.height);
-
+        if(globalShapeList != null){
+            List<Shape> shapeList = globalShapeList.getList();
+            if (shapeList != null) {
+                for(Shape shape : shapeList) {
+                    StrategyFactory strategy = new StrategyFactory(graphics2d);
+                    strategy.strategize(shape);
                 }
             }
         }
     }
+
+    @Override
+    public void update() {
+        this.repaint();
+    }
 }
+
 
