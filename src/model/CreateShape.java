@@ -5,7 +5,6 @@ import model.Shapes.Shape;
 import model.Shapes.ShapeFactory;
 import model.interfaces.IUndoable;
 import model.persistence.ApplicationState;
-import view.gui.PaintCanvas;
 
 import java.util.*;
 
@@ -27,12 +26,12 @@ public class CreateShape implements IUndoable {
         CommandHistory.add(this);
     }
 
-    public void removeShape(PaintCanvas canvas){
+    public void removeShape(){
         removedShape = globalList.Remove();
         CommandHistory.undo();
     }
 
-    public void redoShape(PaintCanvas canvas){
+    public void redoShape(){
         CommandHistory.redo();
         GlobalShapeLists instance = GlobalShapeLists.getInstance();
         List<Shape> removed = instance.getRemovedShapes();

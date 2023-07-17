@@ -20,5 +20,11 @@ public class Triangle extends Shape{
         this.yAxis[0] = this.start.y;
         this.yAxis[1] = this.end.y;
         this.yAxis[2] = this.end.y;
+
+        //added for collision detection alg
+        width = calcSide(this.start.x, this.end.x);
+        height = calcSide(this.start.y, this.end.y);
+        minX = Math.min(start.x, end.x);
+        minY = Math.min(start.y, end.y);
     }
 }

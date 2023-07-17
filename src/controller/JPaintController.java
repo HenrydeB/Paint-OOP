@@ -1,7 +1,10 @@
 package controller;
 
 import model.CreateShape;
+import model.MouseActions;
+import model.MouseMode;
 import model.interfaces.IApplicationState;
+import model.persistence.ApplicationState;
 import view.EventName;
 import view.gui.PaintCanvas;
 import view.interfaces.IUiModule;
@@ -35,13 +38,31 @@ public class JPaintController implements IJPaintController {
     }
 
     private void undo() {
-        CreateShape action = new CreateShape();
-        action.removeShape(canvas);
+        switch (applicationState.getActiveMouseMode()){
+            case DRAW -> {
+                CreateShape action = new CreateShape();
+                action.removeShape();
+            }
+            case MOVE -> {
+                MouseActions action = new MouseActions((ApplicationState) applicationState);
+                action.undoMove();
+            }
+        }
+
     }
 
     private void redo() {
-        CreateShape action = new CreateShape();
-        action.redoShape(canvas);
+        switch (applicationState.getActiveMouseMode()){
+            case DRAW -> {
+                CreateShape action = new CreateShape();
+                action.redoShape();
+            }
+            case MOVE -> {
+                MouseActions action = new MouseActions((ApplicationState) applicationState);
+                action.redoMove();
+            }
+        }
+
     }
 
     private void copy() {

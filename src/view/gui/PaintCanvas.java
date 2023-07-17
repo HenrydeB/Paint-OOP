@@ -21,8 +21,8 @@ public PaintCanvas() {
             List<Shape> shapeList = globalShapeList.getList();
             if (shapeList != null) {
                 for(Shape shape : shapeList) {
-                    StrategyFactory strategy = new StrategyFactory(graphics2d);
-                    strategy.strategize(shape);
+                    StrategyFactory strategy = new StrategyFactory(graphics2d, shape);
+                    strategy.strategize();
                 }
             }
         }

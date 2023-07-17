@@ -12,13 +12,11 @@ public class GlobalShapeLists implements IShapeSubject {
     private List<Shape> shapeList;
     private List<Shape> removedShapes;
     private List<IShapeObserver> observers;
-    private List<Shape> selectedShapes;
 
     public GlobalShapeLists(){
         shapeList = new ArrayList<>();
         removedShapes = new ArrayList<>();
         observers = new ArrayList<>();
-        selectedShapes = new ArrayList<>();
     }
 
     public static synchronized GlobalShapeLists getInstance(){

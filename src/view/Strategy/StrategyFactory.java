@@ -3,31 +3,33 @@ package view.Strategy;
 import model.Shapes.*;
 import model.Shapes.Shape;
 import model.Shapes.ShapeShadingType;
+import model.interfaces.IFactoryPattern;
 import model.persistence.ApplicationState;
 import view.interfaces.IShapeStrategy;
 
 import java.awt.*;
 
-public class StrategyFactory {
-    Graphics2D graphics;
-//double check implementation
-    public StrategyFactory(Graphics2D g){
+public class StrategyFactory implements IFactoryPattern{
+    Graphics2D graphics; //need to update for the observer pattern maybe?
+    Shape strategyShape;
+    public StrategyFactory (Graphics2D g, Shape shape){
         graphics = g;
+        strategyShape = shape;
     }
-    public void strategize(Shape shape){
-        switch(shape.type){
+    public void strategize(){
+        switch(strategyShape.type){
             case RECTANGLE -> {
                 RectangleStrategy strategy = new RectangleStrategy(graphics);
-                design(strategy, shape);
+                design(strategy, strategyShape);
             }
             case ELLIPSE -> {
                 EllipseStrategy strategy = new EllipseStrategy(graphics);
-                design(strategy, shape);
+                design(strategy, strategyShape);
 
             }
             case TRIANGLE -> {
                 TriangleStrategy strategy = new TriangleStrategy(graphics);
-                design(strategy, shape);
+                design(strategy, strategyShape);
             }
         }
     }

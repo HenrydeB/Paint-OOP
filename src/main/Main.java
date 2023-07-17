@@ -20,7 +20,6 @@ public class Main {
 
         ApplicationState appState = new ApplicationState(uiModule);
 
-
         paintCanvas.addMouseListener(new ClickHandler(paintCanvas, appState));
 
         new JPaintController(uiModule, appState, paintCanvas);

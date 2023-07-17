@@ -35,7 +35,7 @@ public class Shape implements IShape {
         minY = Math.min(start.y, end.y);
     }
 
-    private int calcSide(int cor1, int cor2){
+    int calcSide(int cor1, int cor2){
         return Math.max(cor1, cor2) - Math.min(cor1, cor2);
     }
 
