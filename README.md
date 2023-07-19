@@ -28,7 +28,6 @@
   3. Strategy Pattern: I utilized the Strategy Pattern in how I determine how to design my shape. Found in view/Strategy, the ShapeDesigner class uses a IShapeDesign interface to reference the 3 different classes that define how to draw the shape (OutlineStrategy, FillStrategy, and OutlineFillStrategy).
  
  Again, there is decent amount of refactorization I need to do to get more of these data structures working across the board (such as using the state pattern for the MouseActionFactory (which at this point is not even a factory yet). 
-Needed to turn this in early in case I would be unable to submit by the due date.
 
 ### GitHub Repo ###
 I know this is leading to this exact page, but I don't want to miss something
