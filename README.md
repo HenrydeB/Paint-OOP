@@ -1,4 +1,10 @@
 # JPaint
+## Table of Contents
+* [Sprint 1](#sprint-1)
+* [Sprint 2](#sprint-2)
+  * [S2 Design Patterns](#s2-design-patterns)
+
+
 ## Sprint 1 ##
 * This includes functionality to create green rectangles and undo / redo said rectangles
 * you may undo several rectangles and redo will bring all of them back in the reverse order
@@ -13,7 +19,7 @@
 * For mouse move, this will offset the currently selected shapes by the distance between on click and offclick, in the dragged direction
 * NOTE: Undo and Redo only work for the most current move for this, I was unable to successfully undo a series of moves and redo those series of moves. Will need some refactorization to get this to work properly
 
-  ### Design Patterns ###
+  ### S2 Design Patterns ###
   For this sprint, I did my best to utilize 3 design patterns, and have other sections in my code that require some refactorization to meet the criteria of being an actual implementation of said design pattern.
   Below are 3 design patterns that I believe are (or are the closest) to being correct:
   1. Static Factory Pattern: 
