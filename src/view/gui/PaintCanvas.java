@@ -2,7 +2,8 @@ package view.gui;
 
 import model.Lists.GlobalShapeLists;
 import model.Shapes.Shape;
-import view.Strategy.StrategyFactory;
+import model.interfaces.IShape;
+import view.Strategy.ShapeDesigner;
 import view.interfaces.IShapeObserver;
 
 import javax.swing.JComponent;
@@ -17,12 +18,12 @@ public PaintCanvas() {
     @Override
     public void paint(Graphics g) {
         Graphics2D graphics2d = (Graphics2D)g;
+        ShapeDesigner designer = new ShapeDesigner();
         if(globalShapeList != null){
-            List<Shape> shapeList = globalShapeList.getList();
+            List<IShape> shapeList = globalShapeList.getList();
             if (shapeList != null) {
-                for(Shape shape : shapeList) {
-                    StrategyFactory strategy = new StrategyFactory(graphics2d, shape);
-                    strategy.strategize();
+                for(IShape shape : shapeList) {
+                    designer.draw((Shape)shape, graphics2d);
                 }
             }
         }

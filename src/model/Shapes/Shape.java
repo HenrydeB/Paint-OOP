@@ -6,7 +6,7 @@ import model.persistence.ApplicationState;
 
 import java.awt.*;
 
-public class Shape implements IShape {
+ public class Shape implements IShape {
 
    public ShapeType type;
    public int width;

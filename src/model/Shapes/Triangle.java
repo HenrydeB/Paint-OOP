@@ -1,10 +1,11 @@
 package model.Shapes;
 
 import model.Point;
+import model.interfaces.IShape;
 import model.persistence.ApplicationState;
 
-public class Triangle extends Shape{
-
+ public class Triangle extends Shape {
+//work on making this package private
    public int[] xAxis = new int[3];
    public int[] yAxis = new int[3];
     public Triangle(ApplicationState appState, Point initial, Point last) {
@@ -22,9 +23,6 @@ public class Triangle extends Shape{
         this.yAxis[2] = this.end.y;
 
         //added for collision detection alg
-        width = calcSide(this.start.x, this.end.x);
-        height = calcSide(this.start.y, this.end.y);
-        minX = Math.min(start.x, end.x);
-        minY = Math.min(start.y, end.y);
+        super.create();
     }
 }

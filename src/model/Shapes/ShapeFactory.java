@@ -1,23 +1,18 @@
 package model.Shapes;
 import model.Point;
+import model.interfaces.IShape;
 import model.persistence.ApplicationState;
 
 public class ShapeFactory {
-    public Shape createShape(ApplicationState appState, Point start, Point end) {
-        switch(appState.getActiveShapeType()){
-            case RECTANGLE -> {
-               Rectangle rectangle = new Rectangle(appState, start, end);
-               return rectangle;
-            }
-            case ELLIPSE -> {
-                Ellipse ellipse = new Ellipse(appState, start, end);
-                return ellipse;
-            }
-            case TRIANGLE -> {
-                Triangle triangle = new Triangle(appState, start, end);
-                return triangle;
-            }
-        }
-        return null;
+    public static IShape createRectangle(ApplicationState appState, Point start, Point end){
+        return new Rectangle(appState, start, end);
+    }
+
+    public static IShape createEllipse(ApplicationState appState, Point start, Point end){
+        return new Ellipse(appState, start, end);
+    }
+
+    public static IShape createTriangle(ApplicationState appState, Point start, Point end){
+        return new Triangle(appState, start, end);
     }
 }

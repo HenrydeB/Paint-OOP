@@ -32,6 +32,7 @@ public class ClickHandler extends MouseAdapter {
         end.x = e.getX();
         end.y = e.getY();
         MouseActionFactory action = new MouseActionFactory(appState, start, end);
+        appState.getActiveMouseMode();
         action.strategize();
     }
 }

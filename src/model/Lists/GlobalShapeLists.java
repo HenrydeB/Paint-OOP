@@ -1,6 +1,7 @@
 package model.Lists;
 
 import model.Shapes.Shape;
+import model.interfaces.IShape;
 import model.interfaces.IShapeSubject;
 import view.interfaces.IShapeObserver;
 
@@ -9,8 +10,8 @@ import java.util.List;
 
 public class GlobalShapeLists implements IShapeSubject {
     private static GlobalShapeLists instance;
-    private List<Shape> shapeList;
-    private List<Shape> removedShapes;
+    private List<IShape> shapeList;
+    private List<IShape> removedShapes;
     private List<IShapeObserver> observers;
 
     public GlobalShapeLists(){
@@ -26,21 +27,21 @@ public class GlobalShapeLists implements IShapeSubject {
         return instance;
     }
 
-    public List<Shape> getList(){
+    public List<IShape> getList(){
         return shapeList;
     }
 
-    public List<Shape> getRemovedShapes() { return removedShapes; }
+    public List<IShape> getRemovedShapes() { return removedShapes; }
 
-    public void AddToList(Shape shape){
+    public void AddToList(IShape shape){
         shapeList.add(shape);
         notifyObservers();
     }
 
-    public Shape Remove(){
+    public IShape Remove(){
         int index = shapeList.size() - 1;
         if((index >= 0)) {
-            Shape recent = shapeList.get(index);
+            IShape recent = shapeList.get(index);
             shapeList.remove(index);
             removedShapes.add(recent);
             notifyObservers();
@@ -53,7 +54,7 @@ public class GlobalShapeLists implements IShapeSubject {
         shapeList.clear();
     }
 
-    public Shape Recent() {
+    public IShape Recent() {
         return shapeList.get((shapeList.size() - 1));
     }
 

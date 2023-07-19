@@ -3,6 +3,7 @@ package model;
 import model.Lists.GlobalShapeLists;
 import model.Lists.ShapeActions;
 import model.Shapes.*;
+import model.interfaces.IShape;
 import model.interfaces.IUndoable;
 import model.persistence.ApplicationState;
 
@@ -22,10 +23,10 @@ public class MouseActions implements IUndoable {
             instance.clearSelected();
         }
         Rectangle boundBox = new Rectangle(state, start, end);
-        List<Shape> createdShapes = GlobalShapeLists.getInstance().getList();
-        for(Shape shape : createdShapes){
-            if(doesCollide(boundBox, shape)){
-                instance.addSelected(shape);
+        List<IShape> createdShapes = GlobalShapeLists.getInstance().getList();
+        for(IShape shape : createdShapes){
+            if(doesCollide(boundBox, (Shape)shape)){
+                instance.addSelected((Shape)shape);
             }
         }
         System.out.println("Selected shapes count = " + instance.getSelectedShapes().size());
@@ -83,7 +84,7 @@ public class MouseActions implements IUndoable {
         int dY = instance.deltY;
         for(Shape shape : moved){
             if(shape.type.equals(ShapeType.TRIANGLE)){
-                moveTriangle((Triangle)shape, -dX, -dY);
+                moveTriangle((Triangle) shape, -dX, -dY);
             } else {
                 shape.minX = shape.minX + (-dX);
                 shape.minY = shape.minY + (-dY);
