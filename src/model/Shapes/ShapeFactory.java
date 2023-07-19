@@ -7,7 +7,6 @@ public class ShapeFactory {
         switch(appState.getActiveShapeType()){
             case RECTANGLE -> {
                Rectangle rectangle = new Rectangle(appState, start, end);
-                System.out.println(rectangle.width + ", " + rectangle.height);
                return rectangle;
             }
             case ELLIPSE -> {
