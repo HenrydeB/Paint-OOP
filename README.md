@@ -14,7 +14,7 @@
 
 ## Sprint 2 ##
 * Able to draw all shapes, with all colors, utilizing all shading types
-* When choosing a shading type, primary color is used for all modes, and for fill and outline it is used for the fill, secondary for the outline
+* When choosing a shading type, primary color is used for all modes, and for fill with outline it is used for the fill, secondary for the outline
 * In 'select' mode clicking on one shape selects that one shape, clicking off of a shape deselects currently selected shape(s), and clicking and dragging will create an invisible bounding box that will select all shapes within it
 * For mouse move, this will offset the currently selected shapes by the distance between on click and offclick, in the dragged direction
 * NOTE: Undo and Redo only work for the most current move for this, I was unable to successfully undo a series of moves and redo those series of moves. Will need some refactorization to get this to work properly
@@ -27,7 +27,7 @@
   2. Observer Pattern: I utilized the observer pattern to connect my GlobalShapeLists class to the PaintCanvas class. The IShapeSubject interface contains addObserver(IShapeObserver) removeObservers(IShapeObserver), and notifyObservers(). This is located in model/interfaces. The IShapeObserver interface, stored in view/interface is implemented in view/gui/PaintCanvas, and implements an update() method derived from the interface, which then calls repaint()
   3. Strategy Pattern: I utilized the Strategy Pattern in how I determine how to design my shape. Found in view/Strategy, the ShapeDesigner class uses a IShapeDesign interface to reference the 3 different classes that define how to draw the shape (OutlineStrategy, FillStrategy, and OutlineFillStrategy).
  
- Again, there is decent amount of refactorization I need to do to get more of these data structures working across the board (such as using the state pattern for the MouseActionFactory (which at this point is not even a factory yet). 
+ Again, there is decent amount of refactorization I need to do to get more of these design patterns working across the board (such as using the state pattern for the MouseActionFactory (which at this point is not even a factory yet). 
 
 ### GitHub Repo ###
 I know this is leading to this exact page, but I don't want to miss something
