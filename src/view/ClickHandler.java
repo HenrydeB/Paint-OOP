@@ -1,7 +1,6 @@
 package view;
 
-import model.CreateShape;
-import model.MouseActionFactory;
+import model.MouseActionStrategy;
 import model.Point;
 import model.persistence.ApplicationState;
 import view.gui.PaintCanvas;
@@ -31,7 +30,7 @@ public class ClickHandler extends MouseAdapter {
     public void mouseReleased(MouseEvent e){
         end.x = e.getX();
         end.y = e.getY();
-        MouseActionFactory action = new MouseActionFactory(appState, start, end);
+        MouseActionStrategy action = new MouseActionStrategy(appState, start, end);
         appState.getActiveMouseMode();
         action.strategize();
     }

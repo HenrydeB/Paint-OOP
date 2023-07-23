@@ -11,6 +11,7 @@ public class OutFillStrategy implements IShapeDesign {
     public OutFillStrategy() {}
     @Override
     public void design(Shape shape, Graphics2D graphics) {
+        graphics.setStroke(new BasicStroke(5));
         switch (shape.type) {
             case RECTANGLE -> {
                 graphics.setColor(shape.getSecondary());

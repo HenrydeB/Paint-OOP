@@ -2,52 +2,39 @@ package model;
 
 import model.Lists.GlobalShapeLists;
 import model.Lists.ShapeActions;
-import model.Shapes.*;
-import model.interfaces.IShape;
+import model.Shapes.Shape;
+import model.Shapes.ShapeType;
+import model.Shapes.Triangle;
+import model.interfaces.IMouseAction;
 import model.interfaces.IUndoable;
-import model.persistence.ApplicationState;
 
 import java.util.List;
 
-public class MouseActions implements IUndoable {
+public class MoveAction implements IMouseAction, IUndoable {
+
     ShapeActions instance;
-    ApplicationState state;
-
-    public MouseActions(ApplicationState appState){
+    boolean isUndo;
+    boolean isRedo;
+    Point start;
+    Point end;
+    public MoveAction(boolean undo, boolean redo, Point s, Point e) {
         instance = ShapeActions.getInstance();
-        state = appState;
+        isUndo = undo;
+        isRedo = redo;
+        start = s;
+        end = e;
     }
-    public void selectShapes(Point start, Point end){
-        CommandHistory.add(this);
-        if(instance.getSelectedShapes().size() > 0){
-            instance.clearSelected();
-        }
-        Rectangle boundBox = new Rectangle(state, start, end);
-        List<IShape> createdShapes = GlobalShapeLists.getInstance().getList();
-        for(IShape shape : createdShapes){
-            if(doesCollide(boundBox, (Shape)shape)){
-                instance.addSelected((Shape)shape);
-            }
-        }
-        System.out.println("Selected shapes count = " + instance.getSelectedShapes().size());
+    @Override
+    public void run() {
+        if(isUndo)
+            undoMove();
+        else if(isRedo)
+            redoMove();
+        else
+            moveShapes();
     }
 
-    private boolean doesCollide(Shape bound, Shape shape){
-        if
-        (
-            (bound.minX < shape.minX + shape.width) &&
-            (bound.minX + bound.width > shape.minX) &&
-            (bound.minY < shape.minY + shape.height) &&
-            (bound.minY + bound.height > shape.minY)
-        )
-        {
-            return true;
-        }
-        return false;
-    }
-
-
-    public void moveShapes(Point start, Point end){
+    public void moveShapes(){
         CommandHistory.add(this);
 
         if(instance.getMovedShapes().size() > 0)
@@ -76,7 +63,6 @@ public class MouseActions implements IUndoable {
         shape.minY = shape.minY + dY;
     }
 
-
     public void undoMove(){
         CommandHistory.undo();
 
@@ -95,6 +81,7 @@ public class MouseActions implements IUndoable {
         instance.clearMoved();
         GlobalShapeLists.getInstance().notifyObservers();
     }
+
     public void redoMove(){
         CommandHistory.redo();
         List<Shape> moved = instance.getUndoMoves();
@@ -111,5 +98,4 @@ public class MouseActions implements IUndoable {
         instance.clearUndoMoves();
         GlobalShapeLists.getInstance().notifyObservers();
     }
-
 }
