@@ -10,16 +10,22 @@ public class ShapeDesigner {
 
     public void draw(Shape shape, Graphics2D graphics) {
         IShapeDesign designer = null;
-        switch(shape.shadingType){
-            case OUTLINE -> {
-                designer = new OutlineStrategy();
+
+        if(!shape.isSelected){
+            switch(shape.shadingType){
+                case OUTLINE -> {
+                    designer = new OutlineStrategy();
+                }
+                case FILLED_IN -> {
+                    designer = new FillStrategy();
+                }
+                case OUTLINE_AND_FILLED_IN -> {
+                    designer = new OutFillStrategy();
+                }
             }
-            case FILLED_IN -> {
-                designer = new FillStrategy();
-            }
-            case OUTLINE_AND_FILLED_IN -> {
-                designer = new OutFillStrategy();
-            }
+        } else {
+            System.out.println("Selected Shape");
+            designer = new SelectedStrategy();
         }
         designer.design(shape, graphics);
     }

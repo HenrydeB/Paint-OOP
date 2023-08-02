@@ -1,6 +1,7 @@
 package view.gui;
 
 import model.Lists.GlobalShapeLists;
+import model.Lists.ShapeActions;
 import model.Shapes.Shape;
 import model.interfaces.IShape;
 import view.Strategy.ShapeDesigner;
@@ -22,8 +23,15 @@ public PaintCanvas() {
         if(globalShapeList != null){
             List<IShape> shapeList = globalShapeList.getList();
             if (shapeList != null) {
+                System.out.println("shapelist size " + shapeList.size());
                 for(IShape shape : shapeList) {
                     designer.draw((Shape)shape, graphics2d);
+                }
+            }
+            List<Shape> selected = ShapeActions.getInstance().getSelectedShapes();
+            if(selected != null){
+                for(Shape shape : selected){
+                    designer.draw(shape, graphics2d);
                 }
             }
         }

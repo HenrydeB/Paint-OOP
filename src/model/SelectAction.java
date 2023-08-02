@@ -11,18 +11,21 @@ import model.interfaces.IShape;
 import model.interfaces.IUndoable;
 import model.persistence.ApplicationState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectAction implements IMouseAction, IUndoable {
-    Point start;
-    Point end;
+    Point initial;
+    Point second;
     ApplicationState state;
     ShapeActions instance;
+    GlobalShapeLists globalInstance;
     public SelectAction(Point s, Point e, ApplicationState appState) {
-        start = s;
-        end = e;
+        initial = s;
+        second = e;
         state = appState;
         instance = ShapeActions.getInstance();
+        globalInstance = GlobalShapeLists.getInstance();
     }
 
 
@@ -31,14 +34,24 @@ public class SelectAction implements IMouseAction, IUndoable {
         CommandHistory.add(this);
         if(instance.getSelectedShapes().size() > 0){
             instance.clearSelected();
+            globalInstance.notifyObservers();
         }
-        IShape boundBox = ShapeFactory.createRectangle(state, start, end);
-        List<IShape> createdShapes = GlobalShapeLists.getInstance().getList();
+        IShape boundBox = ShapeFactory.createRectangle(this.state, this.initial, this.second, false);
+        List<IShape> createdShapes = globalInstance.getList();
         for(IShape shape : createdShapes){
             if(doesCollide((Shape) boundBox, (Shape)shape)){
                 instance.addSelected((Shape)shape);
             }
         }
+
+        List<Shape> selectedShapes = instance.getSelectedShapes();
+        List<Shape> outlinedShapes = new ArrayList<>();
+        for(Shape shape : selectedShapes){
+            outlinedShapes.add(instance.OutlineShapeFactory(state, shape));
+        }
+        instance.addListToSelected(outlinedShapes);
+
+        globalInstance.notifyObservers();
         System.out.println("Selected shapes count = " + instance.getSelectedShapes().size());
     }
 

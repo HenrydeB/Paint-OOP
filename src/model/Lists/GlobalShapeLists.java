@@ -14,7 +14,7 @@ public class GlobalShapeLists implements IShapeSubject {
     private List<IShape> removedShapes;
     private List<IShapeObserver> observers;
 
-    public GlobalShapeLists(){
+    private GlobalShapeLists(){
         shapeList = new ArrayList<>();
         removedShapes = new ArrayList<>();
         observers = new ArrayList<>();
@@ -38,6 +38,14 @@ public class GlobalShapeLists implements IShapeSubject {
         notifyObservers();
     }
 
+    public void AddSetToList(List<IShape> list){
+        for(IShape shape : list){
+            shapeList.add(shape);
+        }
+        notifyObservers();
+    }
+
+
     public IShape Remove(){
         int index = shapeList.size() - 1;
         if((index >= 0)) {
@@ -49,6 +57,7 @@ public class GlobalShapeLists implements IShapeSubject {
         }
         return null;
     }
+
 
     public void Clear(){
         shapeList.clear();

@@ -1,12 +1,16 @@
 package controller;
 
 import model.*;
+import model.Lists.ShapeActions;
+import model.Shapes.Shape;
 import model.interfaces.IApplicationState;
 import model.interfaces.IMouseAction;
 import model.persistence.ApplicationState;
 import view.EventName;
 import view.gui.PaintCanvas;
 import view.interfaces.IUiModule;
+
+import java.util.List;
 
 public class JPaintController implements IJPaintController {
     private final IUiModule uiModule;
@@ -63,12 +67,19 @@ public class JPaintController implements IJPaintController {
     }
 
     private void copy() {
+        ShapeActions instance = ShapeActions.getInstance();
+        List<Shape> selectedShapes = instance.getSelectedShapes();
+        instance.CopyToClipboard(selectedShapes);
     }
 
     private void paste() {
+        IMouseAction action = new PasteAction((ApplicationState) applicationState);
+        action.run();
     }
 
     private void delete() {
+        IMouseAction action = new DeleteAction();
+        action.run();
     }
 
     private void group() {

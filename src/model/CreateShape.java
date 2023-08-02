@@ -23,13 +23,13 @@ public class CreateShape implements IUndoable {
         IShape shape = null;
         switch(appState.getActiveShapeType()){
             case RECTANGLE -> {
-                shape = ShapeFactory.createRectangle(appState, start, end);
+                shape = ShapeFactory.createRectangle(appState, start, end, false);
             }
             case TRIANGLE -> {
-                shape = ShapeFactory.createTriangle(appState, start, end);
+                shape = ShapeFactory.createTriangle(appState, start, end, false);
             }
             case ELLIPSE -> {
-                shape = ShapeFactory.createEllipse(appState, start, end);
+                shape = ShapeFactory.createEllipse(appState, start, end, false);
             }
         }
         GlobalShapeLists instance = GlobalShapeLists.getInstance();
