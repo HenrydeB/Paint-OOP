@@ -1,6 +1,6 @@
 package view;
 
-import model.MouseActionStrategy;
+import model.Actions.MouseActionStrategy;
 import model.Point;
 import model.persistence.ApplicationState;
 import view.gui.PaintCanvas;

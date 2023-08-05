@@ -21,17 +21,17 @@ public PaintCanvas() {
         Graphics2D graphics2d = (Graphics2D)g;
         ShapeDesigner designer = new ShapeDesigner();
         if(globalShapeList != null){
-            List<IShape> shapeList = globalShapeList.getList();
+            List<IShape> shapeList = globalShapeList.getMainList();
             if (shapeList != null) {
                 System.out.println("shapelist size " + shapeList.size());
                 for(IShape shape : shapeList) {
                     designer.draw((Shape)shape, graphics2d);
                 }
             }
-            List<Shape> selected = ShapeActions.getInstance().getSelectedShapes();
+            List<IShape> selected = ShapeActions.getInstance().getSelectedShapes();
             if(selected != null){
-                for(Shape shape : selected){
-                    designer.draw(shape, graphics2d);
+                for(IShape shape : selected){
+                    designer.draw((Shape)shape, graphics2d); //fix
                 }
             }
         }

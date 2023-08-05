@@ -1,10 +1,11 @@
 package controller;
 
-import model.*;
+import model.Actions.*;
 import model.Lists.ShapeActions;
 import model.Shapes.Shape;
 import model.interfaces.IApplicationState;
 import model.interfaces.IMouseAction;
+import model.interfaces.IShape;
 import model.persistence.ApplicationState;
 import view.EventName;
 import view.gui.PaintCanvas;
@@ -41,44 +42,29 @@ public class JPaintController implements IJPaintController {
     }
 
     private void undo() {
-        IMouseAction action = null;
-        switch (applicationState.getActiveMouseMode()){
-            case DRAW -> {
-                action = new DrawAction((ApplicationState)applicationState, null, null, true, false);
-            }
-            case MOVE -> {
-                action = new MoveAction(true, false, null, null);
-            }
-        }
+        UndoAction action = new UndoAction((ApplicationState) applicationState);
         action.run();
     }
 
     private void redo() {
-        IMouseAction action = null;
-        switch (applicationState.getActiveMouseMode()){
-            case DRAW -> {
-                action = new DrawAction((ApplicationState)applicationState, null, null, false, true);
-            }
-            case MOVE -> {
-                action = new MoveAction(false, true, null, null);
-            }
-        }
+        RedoAction action = new RedoAction((ApplicationState) applicationState);
         action.run();
     }
 
     private void copy() {
         ShapeActions instance = ShapeActions.getInstance();
-        List<Shape> selectedShapes = instance.getSelectedShapes();
+        List<IShape> selectedShapes = instance.getSelectedShapes();
+        instance.clearList(instance.getClipboard());
         instance.CopyToClipboard(selectedShapes);
     }
 
     private void paste() {
-        IMouseAction action = new PasteAction((ApplicationState) applicationState);
+        IMouseAction action = new PasteAction((ApplicationState) applicationState, false, false);
         action.run();
     }
 
     private void delete() {
-        IMouseAction action = new DeleteAction();
+        IMouseAction action = new DeleteAction(false, false);
         action.run();
     }
 

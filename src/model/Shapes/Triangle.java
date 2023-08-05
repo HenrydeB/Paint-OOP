@@ -16,6 +16,7 @@ import model.persistence.ApplicationState;
     public void create(){ // need to adjust for ifSelected. Should be able to go based on the min value if start.x == minX, go from there
         super.create();
 
+
         this.xAxis[0] = this.start.get('x');
         this.xAxis[1] = this.end.get('x');
         this.xAxis[2] = this.start.get('x');
@@ -24,34 +25,25 @@ import model.persistence.ApplicationState;
         this.yAxis[1] = this.end.get('y');
         this.yAxis[2] = this.end.get('y');
 
-        if(isSelected)
-            adjustSelectedEndpoints();
-
+        if(isSelected){
+           this.xAxis = adjustSelectedEndpoints(this.xAxis, minX);
+           this.yAxis = adjustSelectedEndpoints(this.yAxis, minY);
+        }
     }
 
-    //can adjust numbers to make this work better
-    private void adjustSelectedEndpoints(){
-        if(this.minX == this.start.get('x')){
-            if(this.minY == this.start.get('y')){
-                this.yAxis[1] = this.yAxis[1] + 3;
-                this.yAxis[2] = this.yAxis[2] + 3;
-            } else if(this.minY == this.end.get('y')){
-                this.xAxis[1] = this.xAxis[1] + 6;
-                this.yAxis[0] = this.yAxis[0] + 6;
+    private int[] adjustSelectedEndpoints(int[] point, int min){
+        int[] adjusted = new int[3];
+        int startY = this.start.get('y');
+        int endX = this.end.get('x');
+        for(int i = 0; i<3; i++){
+            if(point[i] == min) {
+                adjusted[i] = (point[i] == startY || point[i] == endX) ? point[i] - 7 : point[i] - 5;
             }
-        } else if(this.minX == this.end.get('x')){
-            if(this.minY == this.start.get('y')){
-                this.yAxis[1] = this.yAxis[1] +3;
-                this.yAxis[2] = this.yAxis[2] +3;
-                this.xAxis[0] = this.xAxis[0] +3;
-                this.xAxis[2] = this.xAxis[2] +3;
-            } else if(this.minY == this.end.get('y')){
-                this.xAxis[0] = this.xAxis[0] +6;
-                this.xAxis[2] = this.xAxis[2] + 6;
-                this.xAxis[1] = this.xAxis[1] -3;
-                this.yAxis[0] = this.yAxis[0] + 6;
+            else {
+                adjusted[i] = (point[i] == startY || point[i] == endX) ? point[i] + 10 : point[i] + 5;
             }
         }
+        return adjusted;
     }
 
     @Override

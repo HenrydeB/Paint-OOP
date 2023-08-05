@@ -11,6 +11,8 @@ public interface IShape{
 
     void copyStyles(Shape shape);
 
+    boolean isSelected();
+    boolean isCopy();
      Color getPrimary();
      Color getSecondary();
 }

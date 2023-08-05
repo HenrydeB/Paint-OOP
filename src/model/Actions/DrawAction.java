@@ -1,6 +1,5 @@
-package model;
+package model.Actions;
 
-import model.CreateShape;
 import model.Point;
 import model.interfaces.IMouseAction;
 import model.persistence.ApplicationState;
@@ -23,7 +22,7 @@ public class DrawAction implements IMouseAction {
     public void run() {
         CreateShape cs = new CreateShape();
         if(isUndo)
-            cs.removeShape();
+            cs.undo();
         else if(isRedo)
             cs.redoShape();
         else

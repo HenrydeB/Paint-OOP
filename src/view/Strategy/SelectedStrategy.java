@@ -14,11 +14,10 @@ public class SelectedStrategy implements IShapeDesign {
         graphics.setColor(Color.BLACK);
         switch(shape.type){
             case ELLIPSE -> {
-                graphics.drawOval(shape.minX, shape.minY, shape.width, shape.height);
+                graphics.drawOval(shape.minX-5, shape.minY-5, shape.width+10, shape.height+10);
             }
             case RECTANGLE -> {
-                System.out.println(shape.minX);
-                graphics.drawRect(shape.minX, shape.minY, shape.width, shape.height);
+                graphics.drawRect(shape.minX-5, shape.minY-5, shape.width+10, shape.height+10);
             }
             case TRIANGLE -> {
                 Triangle triangle = (Triangle) shape;

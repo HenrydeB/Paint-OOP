@@ -1,11 +1,13 @@
-package model;
+package model.Actions;
 
 import model.Lists.GlobalShapeLists;
 import model.Lists.ShapeActions;
+import model.Point;
 import model.Shapes.Shape;
 import model.Shapes.ShapeType;
 import model.Shapes.Triangle;
 import model.interfaces.IMouseAction;
+import model.interfaces.IShape;
 import model.interfaces.IUndoable;
 
 import java.util.List;
@@ -38,18 +40,19 @@ public class MoveAction implements IMouseAction, IUndoable {
         CommandHistory.add(this);
 
         if(instance.getMovedShapes().size() > 0)
-            instance.getMovedShapes().clear();
+            instance.clearList(instance.getMovedShapes());
 
         instance.setDeltas(start, end);
-        List<Shape> selected = instance.getSelectedShapes();
-        for(Shape shape : selected){
+        List<IShape> selected = instance.getSelectedShapes();
+        for(IShape obj : selected){
+            Shape shape = (Shape)obj; //need to fix
             if(shape.type.equals(ShapeType.TRIANGLE)){
                 moveTriangle((Triangle)shape, instance.deltX, instance.deltY);
             } else {
                 shape.minX = shape.minX + instance.deltX;
                 shape.minY = shape.minY + instance.deltY;
             }
-            instance.addMoved(shape);
+            instance.addToList(shape, instance.getMovedShapes());
         }
         GlobalShapeLists.getInstance().notifyObservers();
     }
@@ -66,36 +69,40 @@ public class MoveAction implements IMouseAction, IUndoable {
     public void undoMove(){
         CommandHistory.undo();
 
-        List<Shape> moved = instance.getMovedShapes();
+        List<IShape> moved = instance.getMovedShapes();
         int dX = instance.deltX;
         int dY = instance.deltY;
-        for(Shape shape : moved){
+        for(IShape selected : moved){
+            Shape shape = (Shape)selected; //need to fix
             if(shape.type.equals(ShapeType.TRIANGLE)){
                 moveTriangle((Triangle) shape, -dX, -dY);
             } else {
                 shape.minX = shape.minX + (-dX);
                 shape.minY = shape.minY + (-dY);
             }
-            instance.addUndoMoves(shape);
+           // instance.addUndoMoves(shape);
+            instance.addToList(shape, instance.getUndoMoves());
         }
-        instance.clearMoved();
+        instance.clearList(instance.getMovedShapes());
         GlobalShapeLists.getInstance().notifyObservers();
+        CommandHistory.add(this);
     }
 
     public void redoMove(){
         CommandHistory.redo();
-        List<Shape> moved = instance.getUndoMoves();
+        List<IShape> moved = instance.getUndoMoves();
         System.out.println("moved size" + moved.size());
-        for(Shape shape : moved){
+        for(IShape obj : moved){
+            Shape shape = (Shape)obj;
             if(shape.type.equals(ShapeType.TRIANGLE)){
                 moveTriangle((Triangle)shape, instance.deltX, instance.deltY);
             } else {
                 shape.minX = shape.minX + instance.deltX;
                 shape.minY = shape.minY + instance.deltY;
             }
-            instance.addMoved(shape);
+            instance.addToList(shape, instance.getMovedShapes());
         }
-        instance.clearUndoMoves();
+        instance.clearList(instance.getUndoMoves());
         GlobalShapeLists.getInstance().notifyObservers();
     }
 }

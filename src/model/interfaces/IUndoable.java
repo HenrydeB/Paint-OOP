@@ -1,7 +1,9 @@
 package model.interfaces;
 
 public interface IUndoable {
-    static boolean undo(){ return false;};
+    static void undo(){ };
 
-    static boolean redo() {return false;};
+    static void redo() {};
+
+
 }

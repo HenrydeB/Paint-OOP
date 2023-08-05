@@ -1,7 +1,8 @@
-package model;
+package model.Actions;
 
+import model.Actions.CommandHistory;
 import model.Lists.GlobalShapeLists;
-import model.Shapes.Shape;
+import model.Point;
 import model.Shapes.ShapeFactory;
 import model.interfaces.IShape;
 import model.interfaces.IUndoable;
@@ -33,13 +34,14 @@ public class CreateShape implements IUndoable {
             }
         }
         GlobalShapeLists instance = GlobalShapeLists.getInstance();
-        instance.AddToList(shape);
+        instance.addToList(shape,instance.getMainList());
         CommandHistory.add(this);
     }
 
-    public void removeShape(){
-        removedShape = globalList.Remove();
+    public void undo(){
+        removedShape = globalList.Remove(globalList.getMainList());
         CommandHistory.undo();
+        CommandHistory.add(this);
     }
 
     public void redoShape(){
@@ -50,8 +52,9 @@ public class CreateShape implements IUndoable {
         if(removedIndex >= 0 ) {
             IShape recent = removed.get(removedIndex);
             removed.remove(removedIndex);
-            instance.AddToList(recent);
+            instance.addToList(recent, instance.getMainList());
         }
+        CommandHistory.add(this);
     }
 
 

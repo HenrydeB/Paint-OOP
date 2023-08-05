@@ -20,7 +20,7 @@ public class Shape implements IShape {
 
    public HashMap<Character, Integer> start = new HashMap<>();
 
-    public HashMap<Character, Integer> end = new HashMap<>();
+   public HashMap<Character, Integer> end = new HashMap<>();
    public ShapeColor primary;
    ShapeColor secondary;
    public ShapeShadingType shadingType;
@@ -36,8 +36,6 @@ public class Shape implements IShape {
         this.end.put('y', last.y);
          this.isSelected = selected;
 
-        if(this.isSelected)
-            adjustPoints();
     }
     @Override
     public void create() {
@@ -73,7 +71,20 @@ public class Shape implements IShape {
          return Math.max(cor1, cor2) - Math.min(cor1, cor2);
      }
 
-
+    @Override
+    public boolean isCopy(){
+        if(this.isCopy){
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean isSelected(){
+        if(this.isSelected){
+            return true;
+        }
+        return false;
+    }
 
      @Override
      public Color getPrimary(){
@@ -86,7 +97,7 @@ public class Shape implements IShape {
     }
 
     public void adjustPoints(){
-        int pointAdjustment = -3;
+        int pointAdjustment = 5;
         this.start.put('x', (this.start.get('x') + pointAdjustment));
         this.start.put('y', (this.start.get('y') + pointAdjustment));
         this.end.put('x', (this.end.get('x') + pointAdjustment));

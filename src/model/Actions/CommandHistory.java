@@ -1,4 +1,4 @@
-package model;
+package model.Actions;
 
 import model.interfaces.IUndoable;
 
@@ -13,23 +13,27 @@ class CommandHistory implements IUndoable{
 		redoStack.clear();
 	}
 
-	public static boolean undo() {
+	public static void undo() {
 		boolean result = !undoStack.empty();
 		if (result) {
 			IUndoable c = undoStack.pop();
 			redoStack.push(c);
 			IUndoable.undo();
 		}
-		return result;
+		//return result;
 	}
 
-	public static boolean redo() {
+	public static void redo() {
 		boolean result = !redoStack.empty();
 		if (result) {
 			IUndoable c = redoStack.pop();
 			undoStack.push(c);
 			IUndoable.redo();
 		}
-		return result;
+		//return result;
+	}
+
+	public static IUndoable peek(){
+		return undoStack.peek();
 	}
 }

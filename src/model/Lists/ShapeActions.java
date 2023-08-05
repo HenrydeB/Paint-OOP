@@ -5,16 +5,18 @@ import model.Shapes.Shape;
 import model.Shapes.ShapeFactory;
 import model.Shapes.ShapeType;
 import model.interfaces.IShape;
+import model.interfaces.ISingletonLists;
 import model.persistence.ApplicationState;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShapeActions {
-    private List<Shape> movedShapes;
-    private List<Shape> selectedShapes;
-    private List<Shape> undoMoves;
-    private List<Shape> Clipboard;
+public class ShapeActions implements ISingletonLists {
+    private List<IShape> movedShapes;
+    private List<IShape> selectedShapes;
+    private List<IShape> undoMoves;
+    private List<IShape> Clipboard;
+    private List<IShape> deletedShapes;
     private static ShapeActions instance;
 
 
@@ -26,6 +28,7 @@ public class ShapeActions {
         selectedShapes = new ArrayList<>();
         undoMoves = new ArrayList<>();
         Clipboard = new ArrayList<>();
+        deletedShapes = new ArrayList<>();
     }
 
     public static synchronized ShapeActions getInstance(){
@@ -33,25 +36,42 @@ public class ShapeActions {
             instance = new ShapeActions();
         return instance;
     }
+    @Override
+    public void addToList(IShape shape, List<IShape> target){
+        target.add(shape);
+    }
+    @Override
+    public void addSetToList(List<IShape> set, List<IShape> target){
+        for(IShape shape : set){
+            target.add(shape);
+        }
+    }
+    @Override
+    public void clearList(List<IShape> list) {list.clear();}
 
-    public void addSelected(Shape shape){
-        selectedShapes.add(shape);
+    public List<IShape> getDeletedShapes(){return deletedShapes;}
+
+    public List<IShape> getClipboard(){
+        return Clipboard;
     }
 
-    public void CopyToClipboard(List<Shape> list){
-        for(Shape shape : list){
-            if(!shape.isSelected)
+    public List<IShape> getMovedShapes() {return movedShapes;}
+
+
+    public List<IShape> getSelectedShapes(){
+        return selectedShapes;
+    }
+
+    public List<IShape> getUndoMoves() { return undoMoves; }
+
+    public void CopyToClipboard(List<IShape> list){
+        for(IShape shape : list){
+            if(!shape.isSelected())
                 Clipboard.add(shape);
         }
         System.out.println("Copied " + Clipboard.size() + " objects to clipboard");
     }
-    public void ClearClipboard(){
-        Clipboard.clear();
-    }
 
-    public List<Shape> getClipboard(){
-        return Clipboard;
-    }
 
     public Shape OutlineShapeFactory(ApplicationState appState, Shape shape){
         IShape outline = null;
@@ -82,30 +102,5 @@ public class ShapeActions {
         deltY = end.y - start.y;
     }
 
-    public void addMoved(Shape shape){
-        movedShapes.add(shape);
-    }
-
-    public List<Shape> getMovedShapes() {return movedShapes;}
-
-    public void clearMoved() {movedShapes.clear();}
-
-    public void clearSelected(){
-        selectedShapes.clear();
-    }
-
-    public List<Shape> getSelectedShapes(){
-        return selectedShapes;
-    }
-
-    public void addListToSelected(List<Shape> outlines){
-        for(Shape shape : outlines){
-            instance.addSelected(shape);
-        }
-    }
-
-    public List<Shape> getUndoMoves() { return undoMoves; }
-    public void clearUndoMoves() { undoMoves.clear(); }
-    public void addUndoMoves(Shape shape) { undoMoves.add(shape);}
 
 }

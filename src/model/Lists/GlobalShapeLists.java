@@ -3,21 +3,24 @@ package model.Lists;
 import model.Shapes.Shape;
 import model.interfaces.IShape;
 import model.interfaces.IShapeSubject;
+import model.interfaces.ISingletonLists;
 import view.interfaces.IShapeObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GlobalShapeLists implements IShapeSubject {
+public class GlobalShapeLists implements IShapeSubject, ISingletonLists {
     private static GlobalShapeLists instance;
     private List<IShape> shapeList;
     private List<IShape> removedShapes;
+    private List<IShape> deletedShapes;
     private List<IShapeObserver> observers;
 
     private GlobalShapeLists(){
         shapeList = new ArrayList<>();
         removedShapes = new ArrayList<>();
         observers = new ArrayList<>();
+        deletedShapes = new ArrayList<>();
     }
 
     public static synchronized GlobalShapeLists getInstance(){
@@ -27,30 +30,37 @@ public class GlobalShapeLists implements IShapeSubject {
         return instance;
     }
 
-    public List<IShape> getList(){
+    @Override
+    public void addToList(IShape shape, List<IShape> targetList){
+        targetList.add(shape);
+        notifyObservers();
+    }
+
+    @Override
+    public void addSetToList(List<IShape> list, List<IShape> targetList){
+        for(IShape shape : list){
+            targetList.add(shape);
+        }
+        notifyObservers();
+    }
+
+    @Override
+    public void clearList(List<IShape> list){list.clear();}
+
+    public List<IShape> getDeletedShapes(){return deletedShapes;}
+    public List<IShape> getMainList(){
         return shapeList;
     }
 
     public List<IShape> getRemovedShapes() { return removedShapes; }
 
-    public void AddToList(IShape shape){
-        shapeList.add(shape);
-        notifyObservers();
-    }
-
-    public void AddSetToList(List<IShape> list){
-        for(IShape shape : list){
-            shapeList.add(shape);
-        }
-        notifyObservers();
-    }
 
 
-    public IShape Remove(){
-        int index = shapeList.size() - 1;
+    public IShape Remove(List<IShape> target){
+        int index = target.size() - 1;
         if((index >= 0)) {
-            IShape recent = shapeList.get(index);
-            shapeList.remove(index);
+            IShape recent = target.get(index);
+            target.remove(index);
             removedShapes.add(recent);
             notifyObservers();
             return recent;
@@ -58,14 +68,6 @@ public class GlobalShapeLists implements IShapeSubject {
         return null;
     }
 
-
-    public void Clear(){
-        shapeList.clear();
-    }
-
-    public IShape Recent() {
-        return shapeList.get((shapeList.size() - 1));
-    }
 
     @Override
     public void addObserver(IShapeObserver observer) {

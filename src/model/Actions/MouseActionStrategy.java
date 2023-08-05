@@ -1,5 +1,6 @@
-package model;
+package model.Actions;
 
+import model.Point;
 import model.interfaces.IMouseAction;
 import model.persistence.ApplicationState;
 
