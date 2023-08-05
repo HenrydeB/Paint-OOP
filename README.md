@@ -3,6 +3,8 @@
 * [Sprint 1](#sprint-1)
 * [Sprint 2](#sprint-2)
   * [S2 Design Patterns](#s2-design-patterns)
+* [Sprint 3](#sprint-2)
+  * [S3 Design Patterns](#s3-design-patterns)
 
 
 ## Sprint 1 ##
@@ -28,6 +30,28 @@
   3. Strategy Pattern: I utilized the Strategy Pattern in how I determine how to design my shape. Found in view/Strategy, the ShapeDesigner class uses a IShapeDesign interface to reference the 3 different classes that define how to draw the shape (OutlineStrategy, FillStrategy, and OutlineFillStrategy).
  
  Again, there is decent amount of refactorization I need to do to get more of these design patterns working across the board (such as using the state pattern for the MouseActionFactory (which at this point is not even a factory yet). 
+
+ ## Sprint 3 ##
+* Able to copy shapes to clipboard
+* the copied shape is not deselected
+  * If the selected shape that was copied is moved and the the paste action is pressed  then the pasted shape will appear at the origin of the copied shape + the offset I gave to pasted shapes
+*  If there is anything in the clipboard while the paste action is pressed, then a duplicate shape to the one that was copied will be added to the main ShapeList, appearing diagonal to the original copied shape at a slight offset.
+*  When the delete action is selected from the UI, the selected shape will be removed from the main shapelist and subsequently deleted from the canvas
+*  Selected shapes now display an outline, which is at least 5px off from the original shape
+*  The Undo & Redo actions now support the Paste and Delete operations
+
+  ### S3 Design Patterns ###
+  #### S2 patterns ####
+   1. Static Factory Pattern: 
+       I use this in models/Shapes/ShapeFactory and it is used to determine which shape will be created. One issue is that I do still have to reference the Rectangle and Triangle classes elsewhere in the code so I can correctly implement other parts of the assignment. This will need to be refactored I believe.
+  2. Observer Pattern: I utilized the observer pattern to connect my GlobalShapeLists class to the PaintCanvas class. The IShapeSubject interface contains addObserver(IShapeObserver) removeObservers(IShapeObserver), and notifyObservers(). This is located in model/interfaces. The IShapeObserver interface, stored in view/interface is implemented in view/gui/PaintCanvas, and implements an update() method derived from the interface, which then calls repaint()
+  #### S3 patterns ####
+  NOTE: The strategy Pattern was listed in the previous sprint because I had already implemented it so I thought may as well list it. I am including it in this sprint's requirements of 4 design patterns which was discussed in class on 08/02
+ 
+  3. Strategy Pattern: I utilized the Strategy Pattern in how I determine how to design my shape. Found in view/Strategy, the ShapeDesigner class uses a IShapeDesign interface to reference the 3 different classes that define how to draw the shape (OutlineStrategy, FillStrategy, OutlineFillStrategy, and SelectedStrategy).
+  
+  4. Singleton Pattern: I have two different singleton patterns in my code, but namely I want to highlight the GlobalShapeLists class. Within this (and my other singleton), I have several private Lists that I use to store the shapes affected by different actions and my general shapeList, which is my current set of shapes to be rendered on the canvas. It's like my (not) database.
+
 
 ### GitHub Repo ###
 I know this is leading to this exact page, but I don't want to miss something
