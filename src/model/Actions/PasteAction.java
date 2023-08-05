@@ -44,11 +44,11 @@ ApplicationState state;
             Shape shape = (Shape)selected; //need to go back and fix
             Point start = new Point();
             Point end = new Point();
-            start.x = shape.start.get('x') + 10;
-            start.y = shape.start.get('y') + 10;
+            start.x = shape.start.get('x') + 100;
+            start.y = shape.start.get('y') + 100;
 
-            end.x = shape.end.get('x') + 10;
-            end.y = shape.end.get('y') + 10;
+            end.x = shape.end.get('x') + 100;
+            end.y = shape.end.get('y') + 100;
             CopyShape copy = new CopyShape();
             IShape duplicate = copy.Copy(state, shape, start, end);
             toPaste.add(duplicate);
