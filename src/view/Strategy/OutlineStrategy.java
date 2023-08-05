@@ -2,6 +2,7 @@ package view.Strategy;
 
 import model.Shapes.Shape;
 import model.Shapes.Triangle;
+import model.interfaces.IShape;
 import view.interfaces.IShapeDesign;
 
 import java.awt.*;
@@ -9,9 +10,10 @@ import java.awt.*;
 public class OutlineStrategy implements IShapeDesign {
     public OutlineStrategy() {}
     @Override
-    public void design(Shape shape, Graphics2D graphics) {
-        graphics.setColor(shape.getPrimary());
-        switch (shape.type) {
+    public void design(IShape obj, Graphics2D graphics) {
+        graphics.setColor(obj.getPrimary());
+        Shape shape = (Shape) obj;
+        switch (obj.getType()) {
             case RECTANGLE -> {
                 graphics.setStroke(new BasicStroke(5));
                 graphics.drawRect(shape.minX, shape.minY, shape.width, shape.height);

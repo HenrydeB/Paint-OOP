@@ -23,15 +23,14 @@ public PaintCanvas() {
         if(globalShapeList != null){
             List<IShape> shapeList = globalShapeList.getMainList();
             if (shapeList != null) {
-                System.out.println("shapelist size " + shapeList.size());
                 for(IShape shape : shapeList) {
-                    designer.draw((Shape)shape, graphics2d);
+                    designer.draw(shape, graphics2d);
                 }
             }
             List<IShape> selected = ShapeActions.getInstance().getSelectedShapes();
             if(selected != null){
                 for(IShape shape : selected){
-                    designer.draw((Shape)shape, graphics2d); //fix
+                    designer.draw(shape, graphics2d);
                 }
             }
         }

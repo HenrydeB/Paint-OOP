@@ -10,9 +10,10 @@ import java.awt.*;
 public class OutFillStrategy implements IShapeDesign {
     public OutFillStrategy() {}
     @Override
-    public void design(Shape shape, Graphics2D graphics) {
+    public void design(IShape obj, Graphics2D graphics) {
         graphics.setStroke(new BasicStroke(5));
-        switch (shape.type) {
+        Shape shape = (Shape)obj;
+        switch (obj.getType()) {
             case RECTANGLE -> {
                 graphics.setColor(shape.getSecondary());
                 graphics.drawRect(shape.minX, shape.minY, shape.width, shape.height);

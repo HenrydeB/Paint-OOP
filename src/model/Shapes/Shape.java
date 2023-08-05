@@ -85,6 +85,10 @@ public class Shape implements IShape {
         }
         return false;
     }
+    @Override
+    public ShapeShadingType getShadingType(){
+        return this.shadingType;
+    }
 
      @Override
      public Color getPrimary(){
@@ -94,6 +98,11 @@ public class Shape implements IShape {
     @Override
     public Color getSecondary(){
         return this.secondary.getColor();
+    }
+
+    @Override
+    public ShapeType getType(){
+        return this.type;
     }
 
     public void adjustPoints(){

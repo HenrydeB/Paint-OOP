@@ -1,6 +1,7 @@
 package view.Strategy;
 
 import model.Shapes.Shape;
+import model.interfaces.IShape;
 import model.persistence.ApplicationState;
 import view.interfaces.IShapeDesign;
 
@@ -8,11 +9,11 @@ import java.awt.*;
 
 public class ShapeDesigner {
 
-    public void draw(Shape shape, Graphics2D graphics) {
+    public void draw(IShape shape, Graphics2D graphics) {
         IShapeDesign designer = null;
 
-        if(!shape.isSelected){
-            switch(shape.shadingType){
+        if(shape.isSelected() == false){
+            switch(shape.getShadingType()){
                 case OUTLINE -> {
                     designer = new OutlineStrategy();
                 }
@@ -24,7 +25,6 @@ public class ShapeDesigner {
                 }
             }
         } else {
-            System.out.println("Selected Shape");
             designer = new SelectedStrategy();
         }
         designer.design(shape, graphics);
