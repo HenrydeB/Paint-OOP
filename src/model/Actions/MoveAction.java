@@ -48,6 +48,8 @@ public class MoveAction implements IMouseAction, IUndoable {
             Shape shape = (Shape)obj; //need to fix
             if(shape.type.equals(ShapeType.TRIANGLE)){
                 moveTriangle((Triangle)shape, instance.deltX, instance.deltY);
+                /*Triangle triangle = (Triangle) shape;
+                triangle.moveTriangle(instance.deltX, instance.deltY);*/
             } else {
                 shape.minX = shape.minX + instance.deltX;
                 shape.minY = shape.minY + instance.deltY;
@@ -64,6 +66,11 @@ public class MoveAction implements IMouseAction, IUndoable {
         }
         shape.minX = shape.minX + dX;
         shape.minY = shape.minY + dY;
+
+        shape.start.put('x', shape.xAxis[0]);
+        shape.start.put('y', shape.yAxis[0]);
+        shape.end.put('x', shape.xAxis[1]);
+        shape.end.put('y', shape.yAxis[1]);
     }
 
     public void undoMove(){
