@@ -52,6 +52,8 @@
   
   4. Singleton Pattern: I have two different singleton patterns in my code, but namely I want to highlight the GlobalShapeLists class. Within this (and my other singleton), I have several private Lists that I use to store the shapes affected by different actions and my general shapeList, which is my current set of shapes to be rendered on the canvas. It's like my (not) database.
 
+Maybe another?: I was reading into the Decorator pattern and I think I may have gotten close to it? I didn't want to list it because I am pretty sure I am missing something, this would be found in my Shapes folder with my IShape interface, Shape class, and the more specific shape classes that exend Shape. I believe I am missing something before I can confidently say that it is implemented, is that correct?
+
 
 ### GitHub Repo ###
 I know this is leading to this exact page, but I don't want to miss something
