@@ -26,16 +26,15 @@ public class Shape implements IShape {
    public ShapeShadingType shadingType;
 
     public Shape(ApplicationState appState ,Point initial, Point last, boolean selected){
-         this.type = appState.getActiveShapeType(); //might throw an error because we need to import java.awt.ShapeType
-         this.primary = appState.getActivePrimaryColor();
-         this.secondary = appState.getActiveSecondaryColor();
-         this.shadingType = appState.getActiveShapeShadingType();
-         this.start.put('x', initial.x);
-         this.start.put('y', initial.y);
-        this.end.put('x', last.x);
-        this.end.put('y', last.y);
-         this.isSelected = selected;
-
+     this.type = appState.getActiveShapeType(); //might throw an error because we need to import java.awt.ShapeType
+     this.primary = appState.getActivePrimaryColor();
+     this.secondary = appState.getActiveSecondaryColor();
+     this.shadingType = appState.getActiveShapeShadingType();
+     this.start.put('x', initial.x);
+     this.start.put('y', initial.y);
+     this.end.put('x', last.x);
+     this.end.put('y', last.y);
+     this.isSelected = selected;
     }
     @Override
     public void create() {
@@ -85,6 +84,12 @@ public class Shape implements IShape {
         }
         return false;
     }
+
+    @Override
+    public void setSelected(){
+        if(this.isSelected)
+            this.isSelected = false;
+    }
     @Override
     public ShapeShadingType getShadingType(){
         return this.shadingType;
@@ -104,6 +109,26 @@ public class Shape implements IShape {
     public ShapeType getType(){
         return this.type;
     }
+
+    @Override
+    public int getMinX(){
+        return this.minX;
+    }
+    @Override
+    public int getMinY(){
+        return this.minY;
+    }
+
+    @Override
+    public int getMaxX(){
+        return (start.get('x') > end.get('x')) ? start.get('x') : end.get('x');
+    }
+
+    @Override
+    public int getMaxY(){
+        return (start.get('y') > end.get('y')) ? start.get('y') : end.get('y');
+    }
+
 
     public void adjustPoints(){
         int pointAdjustment = 5;

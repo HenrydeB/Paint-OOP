@@ -2,6 +2,7 @@ package view.gui;
 
 import model.Lists.GlobalShapeLists;
 import model.Lists.ShapeActions;
+import model.Shapes.Group;
 import model.Shapes.Shape;
 import model.interfaces.IShape;
 import view.Strategy.ShapeDesigner;
@@ -35,6 +36,7 @@ public PaintCanvas() {
             }
         }
     }
+
 
     @Override
     public void update() {

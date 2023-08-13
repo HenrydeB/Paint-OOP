@@ -15,7 +15,14 @@ public interface IShape{
     void copyStyles(Shape shape);
 
     boolean isSelected();
+    void setSelected();
     boolean isCopy();
      Color getPrimary();
      Color getSecondary();
+
+     int getMinX();
+     int getMinY();
+
+     int getMaxX();
+     int getMaxY();
 }

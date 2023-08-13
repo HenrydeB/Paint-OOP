@@ -30,6 +30,12 @@ public class GlobalShapeLists implements IShapeSubject, ISingletonLists {
         return instance;
     }
 
+    public void removeSetFromList(List<IShape> toRemove, List<IShape> removeFrom){
+        for(IShape shape : toRemove){
+            removeFrom.remove(shape);
+        }
+    }
+
     @Override
     public void addToList(IShape shape, List<IShape> targetList){
         targetList.add(shape);

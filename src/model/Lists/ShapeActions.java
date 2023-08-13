@@ -47,7 +47,15 @@ public class ShapeActions implements ISingletonLists {
         }
     }
     @Override
-    public void clearList(List<IShape> list) {list.clear();}
+    public void clearList(List<IShape> list) {
+
+        if(list == selectedShapes) {
+            for (IShape shape : list) {
+                shape.setSelected();
+            }
+        }
+        list.clear();
+    }
 
     public List<IShape> getDeletedShapes(){return deletedShapes;}
 

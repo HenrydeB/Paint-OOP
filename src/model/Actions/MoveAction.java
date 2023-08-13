@@ -3,6 +3,7 @@ package model.Actions;
 import model.Lists.GlobalShapeLists;
 import model.Lists.ShapeActions;
 import model.Point;
+import model.Shapes.Group;
 import model.Shapes.Shape;
 import model.Shapes.ShapeType;
 import model.Shapes.Triangle;
@@ -36,6 +37,8 @@ public class MoveAction implements IMouseAction, IUndoable {
             moveShapes();
     }
 
+    //TODO:need to find a way to find a way to look if we have a group instance, and how to handle that
+    // also, consider moving the CommandHistory.add(this) to the run method
     public void moveShapes(){
         CommandHistory.add(this);
 
@@ -46,17 +49,37 @@ public class MoveAction implements IMouseAction, IUndoable {
         List<IShape> selected = instance.getSelectedShapes();
         for(IShape obj : selected){
             Shape shape = (Shape)obj; //need to fix
-            if(shape.type.equals(ShapeType.TRIANGLE)){
+            if(shape instanceof  Triangle){
                 moveTriangle((Triangle)shape, instance.deltX, instance.deltY);
-                /*Triangle triangle = (Triangle) shape;
-                triangle.moveTriangle(instance.deltX, instance.deltY);*/
             } else {
                 shape.minX = shape.minX + instance.deltX;
                 shape.minY = shape.minY + instance.deltY;
+
+                if(shape instanceof Group){
+                    moveShapes(shape);
+                }
             }
             instance.addToList(shape, instance.getMovedShapes());
         }
         GlobalShapeLists.getInstance().notifyObservers();
+    }
+
+    public void moveShapes(IShape group){
+        Group set = (Group)group;
+        for(IShape shape : set.getGroupList()){
+            Shape obj = (Shape)shape; //need to fix
+            if(shape instanceof  Triangle){
+                moveTriangle((Triangle)shape, instance.deltX, instance.deltY);
+            } else {
+                obj.minX = obj.minX + instance.deltX;
+                obj.minY = obj.minY + instance.deltY;
+
+                if(obj instanceof Group) {
+                    moveShapes(obj);
+                }
+            }
+            instance.addToList(shape, instance.getMovedShapes());
+        }
     }
 
     private void moveTriangle(Triangle shape, int dX, int dY){

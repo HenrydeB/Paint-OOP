@@ -12,19 +12,17 @@ public class OutlineStrategy implements IShapeDesign {
     @Override
     public void design(IShape obj, Graphics2D graphics) {
         graphics.setColor(obj.getPrimary());
+        graphics.setStroke(new BasicStroke(5));
         Shape shape = (Shape) obj;
         switch (obj.getType()) {
             case RECTANGLE -> {
-                graphics.setStroke(new BasicStroke(5));
                 graphics.drawRect(shape.minX, shape.minY, shape.width, shape.height);
             }
             case TRIANGLE -> {
                 Triangle triangle = (Triangle) shape;
-                graphics.setStroke(new BasicStroke(5));
                 graphics.drawPolygon(triangle.xAxis, triangle.yAxis, 3);
             }
             case ELLIPSE -> {
-                graphics.setStroke(new BasicStroke(5));
                 graphics.drawOval(shape.minX, shape.minY, shape.width, shape.height);
             }
 

@@ -9,4 +9,9 @@ public class Point {
       y = 0;
    }
 
+   public void setValues(int a, int b){
+      x = a;
+      y = b;
+   }
+
 }
