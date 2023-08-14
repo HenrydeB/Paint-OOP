@@ -53,7 +53,8 @@ import model.persistence.ApplicationState;
         int maxY = this.height + this.minY;
     }
 
-     public void moveTriangle(int dX, int dY){
+    @Override
+     public void Move(int dX, int dY){
          for(int i = 0; i<= this.xAxis.length - 1; i++){
              this.xAxis[i] = this.xAxis[i] + dX;
              this.yAxis[i] = this.yAxis[i] + dY;
@@ -62,6 +63,10 @@ import model.persistence.ApplicationState;
          this.minX = this.minX + dX;
          this.minY = this.minY + dY;
 
+        this.start.put('x', this.xAxis[0]);
+        this.start.put('y', this.yAxis[0]);
+        this.end.put('x', this.xAxis[1]);
+        this.end.put('y', this.yAxis[1]);
 
      }
 

@@ -31,7 +31,7 @@ public class UndoAction implements IMouseAction {
             } else if( recent instanceof GroupAction){
                 action = new GroupAction(state, true, false, false);
             } else if( recent instanceof UngroupAction){
-                action = new UngroupAction(state, true, false);
+                action = new UngroupAction(state, true, false, false);
             }
             action.run();
         } catch(EmptyStackException ex){

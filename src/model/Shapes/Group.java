@@ -130,4 +130,24 @@ public class Group extends Shape {
     public int getMaxY() {
         return super.getMaxY();
     }
+
+    @Override
+    public void Move(int deltX, int deltY){
+        super.Move(deltX, deltY);
+
+        for(IShape shape : group){
+            shape.Move(deltX, deltY);
+        }
+    }
+
+    @Override
+    public void Paste(List<IShape> toPaste, ApplicationState state){
+        super.Paste(toPaste, state);
+
+        for(IShape shape : group){
+            shape.Paste(toPaste, state);
+        }
+    }
 }
+
+

@@ -81,31 +81,6 @@ public class ShapeActions implements ISingletonLists {
     }
 
 
-    public Shape OutlineShapeFactory(ApplicationState appState, Shape shape){
-        IShape outline = null;
-        Point start = new Point();
-        start.x = shape.start.get('x');
-        start.y = shape.start.get('y');
-        Point end = new Point();
-        end.x = shape.end.get('x');
-        end.y = shape.end.get('y');
-        switch(shape.type){
-            case RECTANGLE -> {
-                outline = ShapeFactory.createRectangle(appState, start, end, true);
-                outline.cloneShape(shape);
-            }
-            case TRIANGLE -> {
-                outline = ShapeFactory.createTriangle(appState, start, end, true);
-                outline.cloneShape(shape);
-            }
-            case ELLIPSE -> {
-                outline = ShapeFactory.createEllipse(appState, start, end, true);
-                outline.cloneShape(shape);
-            }
-        }
-        return (Shape)outline;
-    }
-
     public void setDeltas(Point start, Point end){
         deltX = end.x - start.x;
         deltY = end.y - start.y;

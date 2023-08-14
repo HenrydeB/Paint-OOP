@@ -1,11 +1,13 @@
 package model.Shapes;
 
+import model.Actions.CopyShape;
 import model.Point;
 import model.interfaces.IShape;
 import model.persistence.ApplicationState;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
+import java.util.List;
 
 public class Shape implements IShape {
 
@@ -129,13 +131,52 @@ public class Shape implements IShape {
         return (start.get('y') > end.get('y')) ? start.get('y') : end.get('y');
     }
 
+    @Override
+    public void Move(int deltX, int deltY){
+        this.minX = this.minX + deltX;
+        this.minY = this.minY + deltY;
+    }
 
-    public void adjustPoints(){
-        int pointAdjustment = 5;
-        this.start.put('x', (this.start.get('x') + pointAdjustment));
-        this.start.put('y', (this.start.get('y') + pointAdjustment));
-        this.end.put('x', (this.end.get('x') + pointAdjustment));
-        this.end.put('y', (this.end.get('y') + pointAdjustment));
+    @Override
+    public void Paste(List<IShape> toPaste, ApplicationState state){
+        Point nStart = new Point();
+        Point nEnd = new Point();
+
+        nStart.x = this.start.get('x') + 100;
+        nStart.y = this.start.get('y') + 100;
+
+        nEnd.x = this.end.get('x') + 100;
+        nEnd.y = this.end.get('y') + 100;
+
+        CopyShape copy = new CopyShape();
+        IShape duplicate = copy.Copy(state, this, nStart, nEnd);
+        toPaste.add(duplicate);
+    }
+
+    @Override
+    public IShape Outline(ApplicationState state){
+        IShape outline = null;
+        Point oStart = new Point();
+        oStart.x = this.start.get('x');
+        oStart.y = this.start.get('y');
+        Point oEnd = new Point();
+        oEnd.x = this.end.get('x');
+        oEnd.y = this.end.get('y');
+        switch(this.type){
+            case RECTANGLE -> {
+                outline = ShapeFactory.createRectangle(state, oStart, oEnd, true);
+                outline.cloneShape(this);
+            }
+            case TRIANGLE -> {
+                outline = ShapeFactory.createTriangle(state, oStart, oEnd, true);
+                outline.cloneShape(this);
+            }
+            case ELLIPSE -> {
+                outline = ShapeFactory.createEllipse(state, oStart, oEnd, true);
+                outline.cloneShape(this);
+            }
+        }
+        return outline;
     }
 
 }

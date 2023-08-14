@@ -52,7 +52,7 @@ public class SelectAction implements IMouseAction, IUndoable {
         List<IShape> selectedShapes = instance.getSelectedShapes();
         List<IShape> outlinedShapes = new ArrayList<>();
         for(IShape shape : selectedShapes){
-            outlinedShapes.add(instance.OutlineShapeFactory(state, (Shape)shape)); //fix
+            outlinedShapes.add(shape.Outline(state));
         }
         instance.addSetToList(outlinedShapes, instance.getSelectedShapes());
 

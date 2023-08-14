@@ -28,7 +28,7 @@ public class RedoAction implements IMouseAction {
             } else if (recent instanceof GroupAction){
                 action = new GroupAction(appState, false, true, false);
             } else if(recent instanceof UngroupAction){
-                action = new UngroupAction(appState, false, true);
+                action = new UngroupAction(appState, false, true, false);
             }
 
             action.run();

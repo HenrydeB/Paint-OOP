@@ -37,8 +37,6 @@ public class MoveAction implements IMouseAction, IUndoable {
             moveShapes();
     }
 
-    //TODO:need to find a way to find a way to look if we have a group instance, and how to handle that
-    // also, consider moving the CommandHistory.add(this) to the run method
     public void moveShapes(){
         CommandHistory.add(this);
 
@@ -48,53 +46,13 @@ public class MoveAction implements IMouseAction, IUndoable {
         instance.setDeltas(start, end);
         List<IShape> selected = instance.getSelectedShapes();
         for(IShape obj : selected){
-            Shape shape = (Shape)obj; //need to fix
-            if(shape instanceof  Triangle){
-                moveTriangle((Triangle)shape, instance.deltX, instance.deltY);
-            } else {
-                shape.minX = shape.minX + instance.deltX;
-                shape.minY = shape.minY + instance.deltY;
-
-                if(shape instanceof Group){
-                    moveShapes(shape);
-                }
-            }
-            instance.addToList(shape, instance.getMovedShapes());
+            obj.Move(instance.deltX, instance.deltY);
+            instance.addToList(obj, instance.getMovedShapes());
         }
+
         GlobalShapeLists.getInstance().notifyObservers();
     }
 
-    public void moveShapes(IShape group){
-        Group set = (Group)group;
-        for(IShape shape : set.getGroupList()){
-            Shape obj = (Shape)shape; //need to fix
-            if(shape instanceof  Triangle){
-                moveTriangle((Triangle)shape, instance.deltX, instance.deltY);
-            } else {
-                obj.minX = obj.minX + instance.deltX;
-                obj.minY = obj.minY + instance.deltY;
-
-                if(obj instanceof Group) {
-                    moveShapes(obj);
-                }
-            }
-            instance.addToList(shape, instance.getMovedShapes());
-        }
-    }
-
-    private void moveTriangle(Triangle shape, int dX, int dY){
-        for(int i = 0; i<= shape.xAxis.length - 1; i++){
-            shape.xAxis[i] = shape.xAxis[i] + dX;
-            shape.yAxis[i] = shape.yAxis[i] + dY;
-        }
-        shape.minX = shape.minX + dX;
-        shape.minY = shape.minY + dY;
-
-        shape.start.put('x', shape.xAxis[0]);
-        shape.start.put('y', shape.yAxis[0]);
-        shape.end.put('x', shape.xAxis[1]);
-        shape.end.put('y', shape.yAxis[1]);
-    }
 
     public void undoMove(){
         CommandHistory.undo();
@@ -103,15 +61,8 @@ public class MoveAction implements IMouseAction, IUndoable {
         int dX = instance.deltX;
         int dY = instance.deltY;
         for(IShape selected : moved){
-            Shape shape = (Shape)selected; //need to fix
-            if(shape.type.equals(ShapeType.TRIANGLE)){
-                moveTriangle((Triangle) shape, -dX, -dY);
-            } else {
-                shape.minX = shape.minX + (-dX);
-                shape.minY = shape.minY + (-dY);
-            }
-           // instance.addUndoMoves(shape);
-            instance.addToList(shape, instance.getUndoMoves());
+            selected.Move(-dX, -dY);
+            instance.addToList(selected, instance.getUndoMoves());
         }
         instance.clearList(instance.getMovedShapes());
         GlobalShapeLists.getInstance().notifyObservers();
@@ -122,14 +73,8 @@ public class MoveAction implements IMouseAction, IUndoable {
         List<IShape> moved = instance.getUndoMoves();
         System.out.println("moved size" + moved.size());
         for(IShape obj : moved){
-            Shape shape = (Shape)obj;
-            if(shape.type.equals(ShapeType.TRIANGLE)){
-                moveTriangle((Triangle)shape, instance.deltX, instance.deltY);
-            } else {
-                shape.minX = shape.minX + instance.deltX;
-                shape.minY = shape.minY + instance.deltY;
-            }
-            instance.addToList(shape, instance.getMovedShapes());
+            obj.Move(instance.deltX, instance.deltY);
+            instance.addToList(obj, instance.getMovedShapes());
         }
         instance.clearList(instance.getUndoMoves());
         GlobalShapeLists.getInstance().notifyObservers();

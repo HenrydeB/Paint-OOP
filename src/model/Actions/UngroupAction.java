@@ -3,7 +3,6 @@ package model.Actions;
 import model.Lists.GlobalShapeLists;
 import model.Lists.ShapeActions;
 import model.Shapes.Group;
-import model.Shapes.Shape;
 import model.interfaces.IMouseAction;
 import model.interfaces.IShape;
 import model.interfaces.IUndoable;
@@ -17,11 +16,13 @@ public class UngroupAction implements IMouseAction, IUndoable {
     ApplicationState state;
     boolean isUndo;
     boolean isRedo;
+    boolean isSecondaryAction;
 
-    public UngroupAction(ApplicationState appState, boolean undo, boolean redo){
+    public UngroupAction(ApplicationState appState, boolean undo, boolean redo, boolean secondaryAction){
         state = appState;
         isUndo = undo;
         isRedo = redo;
+        isSecondaryAction = secondaryAction;
     }
     @Override
     public void run() {
@@ -37,7 +38,8 @@ public class UngroupAction implements IMouseAction, IUndoable {
     }
 
     private void ungroup(ShapeActions selected, GlobalShapeLists globalList){
-        if(!(CommandHistory.emptyRedo()) && !(CommandHistory.peekRedo() instanceof GroupAction))
+
+        if(!isSecondaryAction)
             CommandHistory.add(this);
 
         List<IShape> selectedShapes = selected.getSelectedShapes();
@@ -56,7 +58,7 @@ public class UngroupAction implements IMouseAction, IUndoable {
         selected.addSetToList(children, selectedShapes);
         List<IShape> outlinedShapes = new ArrayList<>();
         for(IShape shape : selectedShapes){
-            outlinedShapes.add(selected.OutlineShapeFactory(state, (Shape)shape)); //fix
+            outlinedShapes.add(shape.Outline(state));
         }
         selected.addSetToList(outlinedShapes, selectedShapes);
         globalList.RemoveObject(group, globalList.getMainList());

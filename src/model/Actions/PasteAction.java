@@ -2,9 +2,7 @@ package model.Actions;
 
 import model.Lists.GlobalShapeLists;
 import model.Lists.ShapeActions;
-import model.Point;
-import model.Shapes.Shape;
-import model.Shapes.Group;
+
 import model.interfaces.IMouseAction;
 import model.interfaces.IShape;
 import model.interfaces.IUndoable;
@@ -42,45 +40,9 @@ ApplicationState state;
         List<IShape> clipboard = instance.getClipboard();
         List<IShape> toPaste = new ArrayList<>();
         for(IShape selected : clipboard){
-            Shape shape = (Shape)selected; //need to go back and fix
-            Point start = new Point();
-            Point end = new Point();
-            start.x = shape.start.get('x') + 100;
-            start.y = shape.start.get('y') + 100;
-
-            end.x = shape.end.get('x') + 100;
-            end.y = shape.end.get('y') + 100;
-            CopyShape copy = new CopyShape();
-            IShape duplicate = copy.Copy(state, shape, start, end);
-            toPaste.add(duplicate);
-
-            if(shape instanceof Group){
-                paste(shape, toPaste);
-            }
-
+            selected.Paste(toPaste, state);
         }
         globalShapes.addSetToList(toPaste, globalShapes.getMainList());
-    }
-    //TODO: maybe move this to the Group class
-    private void paste(IShape container, List<IShape> toPaste){
-        Group group = (Group)container;
-        List<IShape> set = group.getGroupList();
-        for(IShape shape : set){
-            Shape obj = (Shape)shape; //need to go back and fix
-            Point start = new Point();
-            Point end = new Point();
-            start.x = obj.start.get('x') + 100;
-            start.y = obj.start.get('y') + 100;
-
-            end.x = obj.end.get('x') + 100;
-            end.y = obj.end.get('y') + 100;
-            CopyShape copy = new CopyShape();
-            IShape duplicate = copy.Copy(state, obj, start, end);
-            toPaste.add(duplicate);
-
-            if(shape instanceof Group)
-                paste(shape, toPaste);
-        }
     }
 
     private void undo(GlobalShapeLists globalShapes){

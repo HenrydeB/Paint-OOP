@@ -68,7 +68,7 @@ public class GroupAction implements IMouseAction, IUndoable {
 
     private void undo(){
         CommandHistory.undo();
-        IMouseAction undoGroup = new UngroupAction(state, false, false);
+        IMouseAction undoGroup = new UngroupAction(state, false, false, true);
         undoGroup.run();
     }
 
