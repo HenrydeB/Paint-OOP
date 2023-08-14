@@ -41,7 +41,6 @@ public class CreateShape implements IUndoable {
     public void undo(){
         removedShape = globalList.Remove(globalList.getMainList());
         CommandHistory.undo();
-        CommandHistory.add(this);
     }
 
     public void redoShape(){

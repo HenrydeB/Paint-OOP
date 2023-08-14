@@ -27,9 +27,9 @@ public class DeleteAction implements IMouseAction, IUndoable {
         } else if(isRedo){
             redo(instance, listActions);
         } else{
+            CommandHistory.add(this);
             delete(instance, listActions);
         }
-        CommandHistory.add(this);
     }
 
     private static void delete(GlobalShapeLists instance, ShapeActions listActions){
@@ -40,12 +40,12 @@ public class DeleteAction implements IMouseAction, IUndoable {
             allShapes.remove(shape);
             listActions.addToList(shape, listActions.getDeletedShapes());
         }
-       // listActions.clearSelected();
         listActions.clearList(listActions.getSelectedShapes());
         instance.notifyObservers();
     }
 
     private static void undo(GlobalShapeLists instance, ShapeActions listActions){
+        CommandHistory.undo();
         List<IShape> deleted = listActions.getDeletedShapes();
         for(IShape shape : deleted){
             instance.addToList(shape, instance.getMainList());
@@ -54,6 +54,7 @@ public class DeleteAction implements IMouseAction, IUndoable {
     }
 
     private static void redo(GlobalShapeLists instance, ShapeActions listActions){
+        CommandHistory.redo();
         List<IShape> selected = listActions.getSelectedShapes();
         for(IShape shape : selected){
             instance.getMainList().remove(shape);

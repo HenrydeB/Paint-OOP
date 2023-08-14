@@ -18,10 +18,12 @@ public class GroupAction implements IMouseAction, IUndoable {
     boolean isUndo;
     boolean isRedo;
     ApplicationState state;
-    public GroupAction(ApplicationState appState, boolean undo, boolean redo){
+    boolean isSecondary;
+    public GroupAction(ApplicationState appState, boolean undo, boolean redo, boolean secondaryAction){
         isUndo = undo;
         isRedo = redo;
         state = appState;
+        isSecondary = secondaryAction;
     }
     @Override
     public void run() {
@@ -32,10 +34,12 @@ public class GroupAction implements IMouseAction, IUndoable {
         else
             group();
 
-        CommandHistory.add(this);
     }
 
     private void group() {
+        if(!isSecondary)
+            CommandHistory.add(this);
+
         IShape group = null;
         IMouseAction action = null;
         ShapeActions selectedShapes = ShapeActions.getInstance();
@@ -54,7 +58,7 @@ public class GroupAction implements IMouseAction, IUndoable {
         end.setValues(maxX, maxY);
 
         group = ShapeFactory.createGroup(state, start, end, true, selected);
-        action = new SelectAction(start, end, state);
+        action = new SelectAction(start, end, state, true);
         GlobalShapeLists instance = GlobalShapeLists.getInstance();
         List<IShape> globalShapes = instance.getMainList();
         instance.removeSetFromList(selected, globalShapes);
@@ -63,10 +67,13 @@ public class GroupAction implements IMouseAction, IUndoable {
     }
 
     private void undo(){
-
+        CommandHistory.undo();
+        IMouseAction undoGroup = new UngroupAction(state, false, false);
+        undoGroup.run();
     }
 
     private void redo(){
-
+        CommandHistory.redo();
+        group();
     }
 }

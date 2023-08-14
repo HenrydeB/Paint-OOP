@@ -55,6 +55,13 @@ public class Group extends Shape {
         return isGrouped;
     }
 
+    public void setGrouped(){
+        if(isGrouped)
+            isGrouped = false;
+        else
+            isGrouped = true;
+    }
+
     @Override
     public ShapeShadingType getShadingType() {
         return super.getShadingType();

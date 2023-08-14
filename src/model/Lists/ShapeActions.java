@@ -96,6 +96,7 @@ public class ShapeActions implements ISingletonLists {
             }
             case TRIANGLE -> {
                 outline = ShapeFactory.createTriangle(appState, start, end, true);
+                outline.cloneShape(shape);
             }
             case ELLIPSE -> {
                 outline = ShapeFactory.createEllipse(appState, start, end, true);

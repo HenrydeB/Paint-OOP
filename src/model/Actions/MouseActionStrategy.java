@@ -24,7 +24,7 @@ public class MouseActionStrategy {
                 action = new MoveAction(false, false, start, end);
             }
             case SELECT -> {
-                action = new SelectAction(start, end, state);
+                action = new SelectAction(start, end, state, false);
             }
         }
         action.run();

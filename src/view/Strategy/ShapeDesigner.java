@@ -32,7 +32,8 @@ public class ShapeDesigner {
             designer = new SelectedStrategy();
         }
 
-        designer.design(shape, graphics);
+        if(designer != null)
+            designer.design(shape, graphics);
     }
 
     private IShapeDesign handleGroup(IShape shape, Graphics2D graphics) {

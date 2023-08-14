@@ -33,7 +33,15 @@ class CommandHistory implements IUndoable{
 		//return result;
 	}
 
-	public static IUndoable peek(){
+	public static IUndoable peekUndo(){
 		return undoStack.peek();
+	}
+
+	public static IUndoable peekRedo(){
+		return redoStack.peek();
+	}
+
+	public static boolean emptyRedo(){
+		return redoStack.isEmpty();
 	}
 }

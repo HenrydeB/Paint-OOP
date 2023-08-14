@@ -20,18 +20,23 @@ public class SelectAction implements IMouseAction, IUndoable {
     ApplicationState state;
     ShapeActions instance;
     GlobalShapeLists globalInstance;
-    public SelectAction(Point s, Point e, ApplicationState appState) {
+    boolean secondaryAction;
+
+    public SelectAction(Point s, Point e, ApplicationState appState, boolean secondary) {
         initial = s;
         second = e;
         state = appState;
         instance = ShapeActions.getInstance();
         globalInstance = GlobalShapeLists.getInstance();
+        secondaryAction = secondary;
     }
 
 
     @Override
     public void run() {
-        CommandHistory.add(this);
+        if(!secondaryAction)
+            CommandHistory.add(this);
+
         if(instance.getSelectedShapes().size() > 0){
             instance.clearList(instance.getSelectedShapes());
             globalInstance.notifyObservers();

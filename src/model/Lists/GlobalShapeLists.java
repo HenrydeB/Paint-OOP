@@ -74,6 +74,10 @@ public class GlobalShapeLists implements IShapeSubject, ISingletonLists {
         return null;
     }
 
+    public void RemoveObject(IShape shape, List<IShape> target){
+        target.remove(shape);
+    }
+
 
     @Override
     public void addObserver(IShapeObserver observer) {

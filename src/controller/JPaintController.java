@@ -69,11 +69,12 @@ public class JPaintController implements IJPaintController {
     }
 
     private void group() {
-        IMouseAction action = new GroupAction((ApplicationState) applicationState,false, false);
+        IMouseAction action = new GroupAction((ApplicationState) applicationState,false, false, false);
         action.run();
     }
 
     private void ungroup() {
-
+        IMouseAction action = new UngroupAction((ApplicationState) applicationState, false, false);
+        action.run();
     }
 }

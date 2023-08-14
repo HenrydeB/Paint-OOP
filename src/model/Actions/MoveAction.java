@@ -115,7 +115,6 @@ public class MoveAction implements IMouseAction, IUndoable {
         }
         instance.clearList(instance.getMovedShapes());
         GlobalShapeLists.getInstance().notifyObservers();
-        CommandHistory.add(this);
     }
 
     public void redoMove(){

@@ -34,10 +34,10 @@ ApplicationState state;
         } else{
             paste(instance, globalShapes);
         }
-        CommandHistory.add(this);
     }
 
     private void paste(ShapeActions instance, GlobalShapeLists globalShapes){
+        CommandHistory.add(this);
         List<IShape> clipboard = instance.getClipboard();
         List<IShape> toPaste = new ArrayList<>();
         for(IShape selected : clipboard){
@@ -76,5 +76,6 @@ ApplicationState state;
             IShape shape = iterator.next();
             globalShapes.addToList(shape, globalShapes.getMainList());
         }
+        CommandHistory.redo();
     }
 }
