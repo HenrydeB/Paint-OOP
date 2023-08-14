@@ -10,8 +10,8 @@ import java.util.*;
 //This here is the "composite" of the composite pattern
 public class Group extends Shape {
 
-     List<IShape> group;
-     boolean isGrouped;
+   private  List<IShape> group;
+    private boolean isGrouped;
 
     public Group(ApplicationState appState ,Point initial, Point last, boolean selected, List<IShape> set){
         super(appState, initial, last, selected);
@@ -84,7 +84,11 @@ public class Group extends Shape {
 
     @Override
     public void copyStyles(Shape shape) {
-
+        super.copyStyles(shape);
+        if(shape instanceof Group){
+            Group groupedShape = (Group) shape;
+            this.isGrouped = groupedShape.isGrouped();
+        }
     }
 
     @Override

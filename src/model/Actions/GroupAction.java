@@ -57,7 +57,7 @@ public class GroupAction implements IMouseAction, IUndoable {
         Point end = new Point();
         end.setValues(maxX, maxY);
 
-        group = ShapeFactory.createGroup(state, start, end, true, selected);
+        group = ShapeFactory.createGroup(state, start, end, false, selected);
         action = new SelectAction(start, end, state, true);
         GlobalShapeLists instance = GlobalShapeLists.getInstance();
         List<IShape> globalShapes = instance.getMainList();
