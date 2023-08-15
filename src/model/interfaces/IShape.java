@@ -35,4 +35,6 @@ public interface IShape{
      void Paste(List<IShape> toPaste, ApplicationState state);
 
      IShape Outline(ApplicationState state);
+
+     List<IShape> UnGroup();
 }

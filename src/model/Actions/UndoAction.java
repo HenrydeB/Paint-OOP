@@ -35,7 +35,6 @@ public class UndoAction implements IMouseAction {
             }
             action.run();
         } catch(EmptyStackException ex){
-            System.out.println("Undo stack is empty");
             ex.printStackTrace();
         }
 

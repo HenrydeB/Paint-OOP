@@ -25,13 +25,18 @@ public class Group extends Shape {
 
     @Override
     public void create() {
-        //TODO: this will be the outline that we create, and then we should just be able to reference the shape list
-        // so when we are iterating during the shape creation part of Paint, if we have an instanceOf Group, then we can
-        // try to set this up to recursively draw these shapes? This may not be possible because of how paint and repaint work
         super.create();
-
     }
-
+    public List<IShape> UnGroup(){
+        List<IShape> set = getGroupList();
+        for(IShape shape : set){
+            if(shape instanceof Group){
+                Group obj = (Group) shape;
+                obj.isGrouped = false;
+            }
+        }
+        return getGroupList();
+    }
     public List<IShape> getGroupList(){
         return group;
     }

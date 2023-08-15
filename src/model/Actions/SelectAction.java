@@ -57,7 +57,6 @@ public class SelectAction implements IMouseAction, IUndoable {
         instance.addSetToList(outlinedShapes, instance.getSelectedShapes());
 
         globalInstance.notifyObservers();
-        System.out.println("Selected shapes count = " + instance.getSelectedShapes().size());
     }
 
     private boolean doesCollide(Shape bound, Shape shape){

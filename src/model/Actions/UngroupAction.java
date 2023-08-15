@@ -44,15 +44,17 @@ public class UngroupAction implements IMouseAction, IUndoable {
 
         List<IShape> selectedShapes = selected.getSelectedShapes();
         List<IShape> children = new ArrayList<>();
-        Group group = null;
+        IShape group = null;
         for(IShape shape : selectedShapes){
-            if(shape instanceof Group){
-                 group = (Group)shape;
-                if(!group.isGrouped()){
-                    children = group.getGroupList();
-                    break;
-                }
+            children = shape.UnGroup();
+            if(children != null){
+                group = shape;
+                break;
+                //we break because we assume the ungroup action goes on
+                //the one group we just made
+                //IE there cannot be more than one "root" node to the group tree
             }
+
         }
         selected.clearList(selectedShapes);
         selected.addSetToList(children, selectedShapes);

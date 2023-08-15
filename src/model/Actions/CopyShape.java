@@ -12,9 +12,6 @@ public class CopyShape {
     public IShape Copy(ApplicationState state, Shape shape, Point start, Point end){
         IShape duplicate = null;
 
-        if(shape instanceof Group)
-            System.out.println("breakpoint");
-
         if(shape instanceof Group){
             duplicate = ShapeFactory.createGroup(state, start, end, false, ((Group) shape).getGroupList());
             duplicate.copyStyles((Group)shape);

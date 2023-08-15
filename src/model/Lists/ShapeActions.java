@@ -48,13 +48,17 @@ public class ShapeActions implements ISingletonLists {
     }
     @Override
     public void clearList(List<IShape> list) {
-
         if(list == selectedShapes) {
             for (IShape shape : list) {
                 shape.setSelected();
             }
         }
         list.clear();
+    }
+
+    @Override
+    public void RemoveObject(IShape shape, List<IShape> target){
+        target.remove(shape);
     }
 
     public List<IShape> getDeletedShapes(){return deletedShapes;}
@@ -77,7 +81,6 @@ public class ShapeActions implements ISingletonLists {
             if(!shape.isSelected())
                 Clipboard.add(shape);
         }
-        System.out.println("Copied " + Clipboard.size() + " objects to clipboard");
     }
 
 

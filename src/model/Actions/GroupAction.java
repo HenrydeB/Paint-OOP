@@ -40,8 +40,6 @@ public class GroupAction implements IMouseAction, IUndoable {
         if(!isSecondary)
             CommandHistory.add(this);
 
-        IShape group = null;
-        IMouseAction action = null;
         ShapeActions selectedShapes = ShapeActions.getInstance();
         List<IShape> selected = selectedShapes.getSelectedShapes();
         int minX = 0, minY = 0, maxX = 0, maxY = 0;
@@ -57,8 +55,8 @@ public class GroupAction implements IMouseAction, IUndoable {
         Point end = new Point();
         end.setValues(maxX, maxY);
 
-        group = ShapeFactory.createGroup(state, start, end, false, selected);
-        action = new SelectAction(start, end, state, true);
+        IShape group = ShapeFactory.createGroup(state, start, end, false, selected);
+        IMouseAction action = new SelectAction(start, end, state, true);
         GlobalShapeLists instance = GlobalShapeLists.getInstance();
         List<IShape> globalShapes = instance.getMainList();
         instance.removeSetFromList(selected, globalShapes);

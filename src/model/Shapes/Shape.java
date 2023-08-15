@@ -28,7 +28,7 @@ public class Shape implements IShape {
    public ShapeShadingType shadingType;
 
     public Shape(ApplicationState appState ,Point initial, Point last, boolean selected){
-     this.type = appState.getActiveShapeType(); //might throw an error because we need to import java.awt.ShapeType
+     this.type = appState.getActiveShapeType();
      this.primary = appState.getActivePrimaryColor();
      this.secondary = appState.getActiveSecondaryColor();
      this.shadingType = appState.getActiveShapeShadingType();
@@ -74,17 +74,11 @@ public class Shape implements IShape {
 
     @Override
     public boolean isCopy(){
-        if(this.isCopy){
-            return true;
-        }
-        return false;
+        return this.isCopy;
     }
     @Override
     public boolean isSelected(){
-        if(this.isSelected){
-            return true;
-        }
-        return false;
+        return this.isSelected;
     }
 
     @Override
@@ -179,4 +173,9 @@ public class Shape implements IShape {
         return outline;
     }
 
+    @Override
+   public List<IShape> UnGroup(){
+        //basic shapes have no group functionality
+        return null;
+    }
 }

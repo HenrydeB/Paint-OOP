@@ -71,7 +71,6 @@ public class MoveAction implements IMouseAction, IUndoable {
     public void redoMove(){
         CommandHistory.redo();
         List<IShape> moved = instance.getUndoMoves();
-        System.out.println("moved size" + moved.size());
         for(IShape obj : moved){
             obj.Move(instance.deltX, instance.deltY);
             instance.addToList(obj, instance.getMovedShapes());

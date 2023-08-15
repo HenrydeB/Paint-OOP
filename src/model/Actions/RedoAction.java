@@ -33,7 +33,6 @@ public class RedoAction implements IMouseAction {
 
             action.run();
         } catch (EmptyStackException ex){
-            System.out.println("Redo Stack is Empty");
             ex.printStackTrace();
         }
 
