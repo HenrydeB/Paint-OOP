@@ -6,6 +6,9 @@
 * [Sprint 3](#sprint-3)
   * [S3 Design Patterns](#s3-design-patterns)
 * [Sprint 4](#sprint-4)
+  * [Bugs](#bugs)
+  * [S4 Design Patterns](#s4-design-patterns)
+* [Github Repo](#github-repo)   
 
 
 ## Sprint 1 ##
