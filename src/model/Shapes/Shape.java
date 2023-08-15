@@ -127,6 +127,10 @@ public class Shape implements IShape {
 
     @Override
     public void Move(int deltX, int deltY){
+        start.put('x', (start.get('x') + deltX));
+        start.put('y', (start.get('y') + deltY));
+        end.put('x', (end.get('x') + deltX));
+        end.put('y', (end.get('y') + deltY));
         this.minX = this.minX + deltX;
         this.minY = this.minY + deltY;
     }
