@@ -69,8 +69,7 @@ Maybe another?: I was reading into the Decorator pattern and I think I may have 
 *  Undo and Redo now apply to Group and Ungroup
 
 #### Bugs ####
-  1.  If the user copies and pastes a shape, moves the pasted shape, and then groups the two shapes together, the group outline will be around the unmoved shape and the original location of the moved shape.
-  2.  If you create n shapes, group those, create another n shapes, group those together with the previous group, when you ungroup once, the result will be the original group and the other n shapes all being selected, but when you ungroup a second time only the shapes within the original group of shapes will be selected.
+  1.  If you create n shapes, group those, create another n shapes, group those together with the previous group, when you ungroup once, the result will be the original group and the other n shapes all being selected, but when you ungroup a second time only the shapes within the original group of shapes will be selected.
 
 ### S4 Design Patterns ###
 For this sprint I implemented the Composite design pattern. For this I created a Group class which, along with my previously created Shape class, implement the IShape interface. To get this to work I had to do some refactoring, which included moving the math behind the move action behind a method in the IShape interface, with Shape having an implementation for basic shapes and Group having an implementation that would apply the changes to the children of that Group. This also goes for Paste, which is responsible for the generation of the "duplicate" pasted shapes.
