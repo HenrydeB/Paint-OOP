@@ -67,6 +67,7 @@ Maybe another?: I was reading into the Decorator pattern and I think I may have 
 *  Able to ungroup a selected group, the resulting ungrouped shapes will each be surrounded by their own select box
    *  if a group has a nested group, ungrouping will ungroup the outermost group
 *  Undo and Redo now apply to Group and Ungroup
+*  NOTE: I could not find what the requirements for the outline of the Group feature was, so I used a solid outline (similar enough to power point I thought)
 
 #### Bugs ####
   1.  If you create n shapes, group those, create another n shapes, group those together with the previous group, when you ungroup once, the result will be the original group and the other n shapes all being selected, but when you ungroup a second time only the shapes within the original group of shapes will be selected.
