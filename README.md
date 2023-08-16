@@ -70,6 +70,7 @@ Maybe another?: I was reading into the Decorator pattern and I think I may have 
 
 #### Bugs ####
   1.  If you create n shapes, group those, create another n shapes, group those together with the previous group, when you ungroup once, the result will be the original group and the other n shapes all being selected, but when you ungroup a second time only the shapes within the original group of shapes will be selected.
+  2.  If you select a set of shapes, copy, paste, and then select the new shapes and move the new shapes, the select outlines of the new shapes do not always follow the pasted shapes exactly.
 
 ### S4 Design Patterns ###
 For this sprint I implemented the Composite design pattern. For this I created a Group class which, along with my previously created Shape class, implement the IShape interface. To get this to work I had to do some refactoring, which included moving the math behind the move action behind a method in the IShape interface, with Shape having an implementation for basic shapes and Group having an implementation that would apply the changes to the children of that Group. This also goes for Paste, which is responsible for the generation of the "duplicate" pasted shapes.
